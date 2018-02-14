@@ -47,6 +47,21 @@ void print (List* add) {
 	cout << "\n";
 }
 
+void reverse (List* list) {
+	Node* add = list->head;
+	Node* prev = NULL;
+	Node* next;
+	
+	while (add->next != NULL) {
+		next = add->next;
+		add->next = prev;
+		prev = add;
+		add = next;
+	}
+	add->next = prev;
+	list->head = add; 
+}
+
 int main() {
 	List* list = newList();
 	pushList (list, 10);
@@ -58,5 +73,8 @@ int main() {
 	pushList (list, 25);
 	pushList (list, 45);
 	print (list);
+	reverse (list);
+	print (list);
+
 }
 
