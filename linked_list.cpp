@@ -51,15 +51,28 @@ void reverse (List* list) {
 	Node* add = list->head;
 	Node* prev = NULL;
 	Node* next;
-	
+
 	while (add->next != NULL) {
-		next = add->next;
+		next = add->next;	
 		add->next = prev;
 		prev = add;
 		add = next;
 	}
 	add->next = prev;
 	list->head = add; 
+}
+
+void deleteNode (List* list, int x) {
+	Node* temp, *add =  list->head; 
+	while(add->next != NULL) {
+		if (add->next->val == x) {
+			temp = add->next->next;
+			delete add->next;
+			add->next = temp;
+			break;
+		}
+		add = add->next;
+	}
 }
 
 int main() {
@@ -75,6 +88,7 @@ int main() {
 	print (list);
 	reverse (list);
 	print (list);
-
+	deleteNode (list, 15);
+	print(list);
 }
 
