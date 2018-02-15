@@ -82,7 +82,7 @@ int findLengthRecursive (Node* add, int count) {
 }
 
 void deleteNode (List* list, int x) {
-	// if want to delete all ther remove break and else 
+	// if want to delete all then remove break and else 
 	Node* temp, *add =  list->head; 
 	if (add->val == x) {
 		list->head = add->next;
@@ -102,21 +102,75 @@ void deleteNode (List* list, int x) {
 	}
 }
 
+void swapNode(Node*& a, Node*& b) {
+ 
+    Node* temp = a;
+    a = b;
+    b = temp;
+}
+
+void swap (Node** head, int x, int y) {
+	if (x == y) return; 
+
+	Node** add = head, **temp1, **temp2, **a, **b, **temp;
+	int count = 0, q = 0;
+
+	// if (list->head->val == x) {
+	// 	prev1 = NULL;
+	// 	temp1 = list->head;
+	// 	count ++;
+	// 	q = 1;
+	// }	
+	// else if (list->head->val == y) {
+	// 	prev2 = NULL;
+	// 	temp2 = list->head;
+	// 	count ++;
+	// 	q = 1;
+	// }
+	
+	while ((*add) != NULL) {
+		if ((*add)->val == x) {
+			temp1 = add;
+			count ++;
+		}
+		else if ((*add)->val == y) {
+			temp2 = add;
+			count ++;
+		}
+		if (count == 2) {
+			break;
+		}
+		add = &((*add)->next);
+	}
+	if (count != 2) return ;
+
+	swap(*temp1, *temp2);
+    swap(((*temp1)->next), ((*temp2)->next));
+	// *a = temp1->next;
+	// b = temp2->next;
+	// temp = temp1;
+	// temp1 = temp2;
+	// temp2 = temp;
+	// temp1->next = a;
+	// temp2->next = b;
+}
+
 int main() {
 	List* list = newList();
 	cout << findLengthItter(list) << endl;
 	cout << findLengthRecursive(list->head, 0) << endl;
-	
 	pushList (list, 10);
 	pushList (list, 15);
 	pushList (list, 25);
 	pushList (list, 45);
-	pushList (list, 10);
-	pushList (list, 15);
-	pushList (list, 25);
-	pushList (list, 45);
+	pushList (list, 20);
+	pushList (list, 35);
+	pushList (list, 55);
+	pushList (list, 47);
 	print (list);
 	reverse (list);
+	print (list);
+	swap (&list->head, 47, 15);
 	print (list);
 	cout << findLengthRecursive(list->head, 0) << endl;
 	deleteNode (list, 45);
