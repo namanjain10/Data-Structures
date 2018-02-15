@@ -63,15 +63,24 @@ void reverse (List* list) {
 }
 
 void deleteNode (List* list, int x) {
+	// if want to delete all ther remove break and else 
+	  
 	Node* temp, *add =  list->head; 
-	while(add->next != NULL) {
-		if (add->next->val == x) {
-			temp = add->next->next;
-			delete add->next;
-			add->next = temp;
-			break;
+	if (add->val == x) {
+		list->head = add->next;
+		delete add;
+	}
+
+	else {
+		while(add->next != NULL) {
+			if (add->next->val == x) {
+				temp = add->next->next;
+				delete add->next;
+				add->next = temp;
+				break;
+			}
+			add = add->next;
 		}
-		add = add->next;
 	}
 }
 
@@ -88,7 +97,7 @@ int main() {
 	print (list);
 	reverse (list);
 	print (list);
-	deleteNode (list, 15);
+	deleteNode (list, 45);
 	print(list);
 }
 
