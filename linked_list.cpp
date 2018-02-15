@@ -62,9 +62,27 @@ void reverse (List* list) {
 	list->head = add; 
 }
 
+int findLengthItter (List* list) {
+	Node* add = list->head;
+	int count = 0;
+	while (add != NULL) {
+		count++;
+		add = add->next;
+	}
+	return count;
+}
+
+int findLengthRecursive (Node* add, int count) {
+	if (add == NULL) {
+		return count;
+	}
+	else {
+		return findLengthRecursive(add->next, count+1); 
+	}
+}
+
 void deleteNode (List* list, int x) {
 	// if want to delete all ther remove break and else 
-	  
 	Node* temp, *add =  list->head; 
 	if (add->val == x) {
 		list->head = add->next;
@@ -86,6 +104,9 @@ void deleteNode (List* list, int x) {
 
 int main() {
 	List* list = newList();
+	cout << findLengthItter(list) << endl;
+	cout << findLengthRecursive(list->head, 0) << endl;
+	
 	pushList (list, 10);
 	pushList (list, 15);
 	pushList (list, 25);
@@ -97,7 +118,9 @@ int main() {
 	print (list);
 	reverse (list);
 	print (list);
+	cout << findLengthRecursive(list->head, 0) << endl;
 	deleteNode (list, 45);
 	print(list);
+	cout << findLengthItter(list) << endl;
 }
 
