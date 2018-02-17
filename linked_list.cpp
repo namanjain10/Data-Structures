@@ -176,6 +176,16 @@ int nthNodeEnd (List* list, int i) {
 	return ref->val; 
 }
 
+void deleteLinkedList (List* list) {
+	Node* add = list->head, *temp;
+	while (add != NULL) {
+		temp = add->next;
+		delete add;
+		add = temp; 
+	}
+	list->head = NULL; 
+}
+
 int main() {
 	List* list = newList();
 	cout << findLengthItter(list) << endl;
@@ -203,5 +213,7 @@ int main() {
 	cout << "middle " << middleNode (list) << endl;
 
 	cout << findLengthItter(list) << endl;
+	deleteLinkedList(list);
+	print (list);
 }
 
