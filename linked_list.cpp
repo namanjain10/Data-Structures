@@ -186,6 +186,17 @@ void deleteLinkedList (List* list) {
 	list->head = NULL; 
 }
 
+int countFreq (List *list, int x) {
+	Node* add = list->head;
+	int count = 0;
+
+	while (add != NULL) {
+		if (add->val == x) count++;
+		add = add->next;
+	}
+	return count; 
+}
+
 int main() {
 	List* list = newList();
 	cout << findLengthItter(list) << endl;
@@ -196,7 +207,7 @@ int main() {
 	pushList (list, 45);
 	pushList (list, 20);
 	pushList (list, 35);
-	pushList (list, 55);
+	pushList (list, 15);
 	pushList (list, 47);
 	print (list);
 	reverse (list);
@@ -206,6 +217,7 @@ int main() {
 	print (list);
 	cout << nthNode (list, 10) << endl;
 	cout << "middle " << middleNode (list) << endl;
+	cout << "count " << countFreq (list, 85) << endl;
 
 	cout << findLengthRecursive(list->head, 0) << endl;
 	deleteNode (list, 45);
