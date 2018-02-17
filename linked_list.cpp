@@ -335,6 +335,12 @@ int intersectionLinked (List* list1, List* list2) {
  	return add->val;
 } 
 
+void reversePrint (Node* add) {
+	if (add == NULL) return;
+	reversePrint (add->next);
+	cout << add->val << " ";
+}
+
 int main() {
 	// List* list = newList();
 	// cout << findLengthItter(list) << endl;
@@ -388,7 +394,6 @@ int main() {
 	pushList (list2, 70);
 
 	print (list2);
-
-	cout << intersectionLinked (list1, list2) << endl;
+	reversePrint (list1->head);
 }
 
