@@ -151,6 +151,19 @@ int nthNode (List* list, int i) {
 	else return -1;
 }
 
+int middleNode (List* list) {
+	Node* add = list->head, *doub = list->head;
+	while (doub != NULL) {
+		if (doub->next == NULL || doub->next->next == NULL) {
+			break;
+		}
+		doub = doub->next->next;
+		add = add->next;
+		
+	}
+	return add->val;
+}
+
 int main() {
 	List* list = newList();
 	cout << findLengthItter(list) << endl;
@@ -168,10 +181,14 @@ int main() {
 	print (list);
 	swap (&list->head, 47, 15);
 	print (list);
-	cout << nthNode (list, 10) << endl; 
+	cout << nthNode (list, 10) << endl;
+	cout << "middle " << middleNode (list) << endl;
+
 	cout << findLengthRecursive(list->head, 0) << endl;
 	deleteNode (list, 45);
 	print(list);
+	cout << "middle " << middleNode (list) << endl;
+	
 	cout << findLengthItter(list) << endl;
 }
 
