@@ -197,6 +197,24 @@ int countFreq (List *list, int x) {
 	return count; 
 }
 
+int loop (List* list) {
+	Node* add = list->head, *doub = list->head;
+	int q = 0;
+
+	while (doub != NULL) {
+		if (doub->next == NULL || doub->next->next == NULL) {
+			break;
+		}
+		doub = doub->next->next;
+		add = add->next;
+		if (doub == add) {
+			q = 1;
+			break;
+		}
+	}
+	return q;
+}
+
 int main() {
 	List* list = newList();
 	cout << findLengthItter(list) << endl;
