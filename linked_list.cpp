@@ -164,6 +164,18 @@ int middleNode (List* list) {
 	return add->val;
 }
 
+int nthNodeEnd (List* list, int i) {
+	Node* add = list->head, *ref = list->head;
+	while (i--) {
+		add = add->next;
+	}
+	while (add != NULL) {
+		add = add->next;
+		ref = ref->next; 
+	}
+	return ref->val; 
+}
+
 int main() {
 	List* list = newList();
 	cout << findLengthItter(list) << endl;
@@ -179,6 +191,7 @@ int main() {
 	print (list);
 	reverse (list);
 	print (list);
+	cout << "nth from last " << nthNodeEnd (list, 2) << endl;
 	swap (&list->head, 47, 15);
 	print (list);
 	cout << nthNode (list, 10) << endl;
@@ -188,7 +201,7 @@ int main() {
 	deleteNode (list, 45);
 	print(list);
 	cout << "middle " << middleNode (list) << endl;
-	
+
 	cout << findLengthItter(list) << endl;
 }
 
