@@ -215,35 +215,138 @@ int loop (List* list) {
 	return q;
 }
 
+void MaxSumList (List* list1, List* list2) {
+	Node* add1 = list1->head, *add2 = list2->head, *temp1 = list1->head, *temp2 = list2->head, *a, *b, *add;
+	int count1 = 0, count2 = 0, q = 1, listNum = 1;
+
+	while (1) {
+		if (add1 == NULL) break;
+		if (add2 == NULL) break;
+
+		if (add1->val == add2->val || add1 == NULL || add2 == NULL) {
+			if (q == 0) {
+				temp1 = add1;
+				temp2 = add2;
+				q = 1;
+			}
+			else {
+				if (count1 > count2) {
+					while (temp1 != add1) {
+						add = temp1;
+						add = add->next;
+						temp1 = temp1->next;
+					}
+				}
+				else {
+					while (temp2 != add2) {
+						add = temp2;
+						add = add->next;
+						temp2 = temp2->next;
+					}
+				}
+				q = 0;
+				count1 = 0;
+				count2 = 0;
+			}
+		}
+
+		if (q == 1) {
+			count1 += add1->val;
+			count2 += add2->val; 
+		}
+		add1 = add1->next;
+		add2 = add2->next;
+	}
+	list1->head = add;
+}
+
+void MergeSortedList (List* list1, List* list2) {
+	Node* add1 = list1->head, *add2 = list2->head, addHead;
+	Node *add = &addHead;
+
+	addHead.next = NULL;
+
+	while (1) {
+		if (add1 == NULL) {
+			add->next = add2;
+			break;
+		}
+
+		if (add2 == NULL) {
+			add->next = add1;
+			break;
+		}
+		cout << "add " << add1->val << " "<< add2->val << endl;
+
+		if (add1->val < add2->val) {
+			add->next = add1;
+			add1 = add1->next;
+			add = add->next;	
+		}
+		else {
+			add->next = add2;
+			add2 = add2->next;
+			add = add->next;
+		}
+	}
+	list1->head = addHead.next;
+}
+
 int main() {
-	List* list = newList();
-	cout << findLengthItter(list) << endl;
-	cout << findLengthRecursive(list->head, 0) << endl;
-	pushList (list, 10);
-	pushList (list, 15);
-	pushList (list, 25);
-	pushList (list, 45);
-	pushList (list, 20);
-	pushList (list, 35);
-	pushList (list, 15);
-	pushList (list, 47);
-	print (list);
-	reverse (list);
-	print (list);
-	cout << "nth from last " << nthNodeEnd (list, 2) << endl;
-	swap (&list->head, 47, 15);
-	print (list);
-	cout << nthNode (list, 10) << endl;
-	cout << "middle " << middleNode (list) << endl;
-	cout << "count " << countFreq (list, 85) << endl;
+	// List* list = newList();
+	// cout << findLengthItter(list) << endl;
+	// cout << findLengthRecursive(list->head, 0) << endl;
+	// pushList (list, 10);
+	// pushList (list, 15);
+	// pushList (list, 25);
+	// pushList (list, 45);
+	// pushList (list, 20);
+	// pushList (list, 35);
+	// pushList (list, 15);
+	// pushList (list, 47);
+	// print (list);
+	// reverse (list);
+	// print (list);
+	// cout << "nth from last " << nthNodeEnd (list, 2) << endl;
+	// swap (&list->head, 47, 15);
+	// print (list);
+	// cout << nthNode (list, 10) << endl;
+	// cout << "middle " << middleNode (list) << endl;
+	// cout << "count " << countFreq (list, 85) << endl;
 
-	cout << findLengthRecursive(list->head, 0) << endl;
-	deleteNode (list, 45);
-	print(list);
-	cout << "middle " << middleNode (list) << endl;
+	// cout << findLengthRecursive(list->head, 0) << endl;
+	// deleteNode (list, 45);
+	// print(list);
+	// cout << "middle " << middleNode (list) << endl;
 
-	cout << findLengthItter(list) << endl;
-	deleteLinkedList(list);
-	print (list);
+	// cout << findLengthItter(list) << endl;
+	// deleteLinkedList(list);
+	// print (list);
+	List* list1 = newList();
+	List* list2 = newList();
+
+	pushList (list1, 10);
+	pushList (list1, 20);
+	pushList (list1, 23);
+	pushList (list1, 30);
+	pushList (list1, 33);
+	pushList (list1, 49);
+	pushList (list1, 50);
+	pushList (list1, 60);
+
+	print (list1);
+
+	pushList (list2, 5);
+	pushList (list2, 12);
+	pushList (list2, 20);
+	pushList (list2, 32);
+	pushList (list2, 36);
+	pushList (list2, 49);
+	pushList (list2, 70);
+
+	print (list2);
+
+	MergeSortedList (list1, list2);
+	print (list1);
 }
 
