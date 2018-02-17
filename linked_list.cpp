@@ -115,19 +115,6 @@ void swap (Node** head, int x, int y) {
 	Node** add = head, **temp1, **temp2, **a, **b, **temp;
 	int count = 0, q = 0;
 
-	// if (list->head->val == x) {
-	// 	prev1 = NULL;
-	// 	temp1 = list->head;
-	// 	count ++;
-	// 	q = 1;
-	// }	
-	// else if (list->head->val == y) {
-	// 	prev2 = NULL;
-	// 	temp2 = list->head;
-	// 	count ++;
-	// 	q = 1;
-	// }
-	
 	while ((*add) != NULL) {
 		if ((*add)->val == x) {
 			temp1 = add;
@@ -146,13 +133,22 @@ void swap (Node** head, int x, int y) {
 
 	swap(*temp1, *temp2);
     swap(((*temp1)->next), ((*temp2)->next));
-	// *a = temp1->next;
-	// b = temp2->next;
-	// temp = temp1;
-	// temp1 = temp2;
-	// temp2 = temp;
-	// temp1->next = a;
-	// temp2->next = b;
+}
+
+int nthNode (List* list, int i) {
+	Node* add = list->head;
+	int q = 0;
+
+	while (i > 0) {
+		if (add == NULL) {
+			q = 1;
+			break;
+		}
+		add = add->next;
+		i --;
+	}
+	if (q == 0) return add->val;
+	else return -1;
 }
 
 int main() {
@@ -172,6 +168,7 @@ int main() {
 	print (list);
 	swap (&list->head, 47, 15);
 	print (list);
+	cout << nthNode (list, 10) << endl; 
 	cout << findLengthRecursive(list->head, 0) << endl;
 	deleteNode (list, 45);
 	print(list);
