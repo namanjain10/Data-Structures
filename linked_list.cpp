@@ -215,15 +215,22 @@ int loop (List* list) {
 	return q;
 }
 
+// incomplete
 void MaxSumList (List* list1, List* list2) {
-	Node* add1 = list1->head, *add2 = list2->head, *temp1 = list1->head, *temp2 = list2->head, *a, *b, *add;
+	Node* add1 = list1->head, *add2 = list2->head, *temp1 = list1->head, *temp2 = list2->head, addHead;
+
 	int count1 = 0, count2 = 0, q = 1, listNum = 1;
+
+	Node *add = &addHead;
+	addHead.next = NULL;
 
 	while (1) {
 		if (add1 == NULL) break;
 		if (add2 == NULL) break;
 
-		if (add1->val == add2->val || add1 == NULL || add2 == NULL) {
+		cout << "add " << add1->val << " "<< add2->val << endl;
+			
+		if (add1->val == add2->val) {
 			if (q == 0) {
 				temp1 = add1;
 				temp2 = add2;
@@ -232,14 +239,16 @@ void MaxSumList (List* list1, List* list2) {
 			else {
 				if (count1 > count2) {
 					while (temp1 != add1) {
-						add = temp1;
+						cout << "doing1 \n";
+						add->next = temp1;
 						add = add->next;
 						temp1 = temp1->next;
 					}
 				}
 				else {
 					while (temp2 != add2) {
-						add = temp2;
+						cout << "doing2 \n";
+						add->next = temp2;
 						add = add->next;
 						temp2 = temp2->next;
 					}
@@ -249,7 +258,7 @@ void MaxSumList (List* list1, List* list2) {
 				count2 = 0;
 			}
 		}
-
+		
 		if (q == 1) {
 			count1 += add1->val;
 			count2 += add2->val; 
@@ -257,7 +266,7 @@ void MaxSumList (List* list1, List* list2) {
 		add1 = add1->next;
 		add2 = add2->next;
 	}
-	list1->head = add;
+	list1->head = addHead.next;
 }
 
 void MergeSortedList (List* list1, List* list2) {
@@ -291,6 +300,40 @@ void MergeSortedList (List* list1, List* list2) {
 	}
 	list1->head = addHead.next;
 }
+
+int intersectionLinked (List* list1, List* list2) {
+	int length1 = 0, length2 = 0;
+	Node* add1 = list1->head, *add2 = list2->head, *add = NULL;
+
+ 	length1 = findLengthItter(list1);
+ 	length2 = findLengthItter(list2);
+
+ 	int y;
+
+ 	if (length1 > length2) {
+ 		y  = length1-length2 ;
+ 		while (y--) {
+ 			add1 = add1->next;
+ 		}
+ 	}
+	else {
+ 		y  = length2-length1 ;
+		while (y--) {
+ 			add2 = add2->next;
+ 		}
+	}
+
+ 	while (add1 != NULL) {
+ 		if (add1 == add2) {
+ 			add = add1;	
+ 			break;
+ 		}
+ 		add1 = add1->next;
+ 		add2 = add2->next;
+ 	}
+ 	if (add == NULL) return 0;
+ 	return add->val;
+} 
 
 int main() {
 	// List* list = newList();
@@ -346,7 +389,6 @@ int main() {
 
 	print (list2);
 
-	MergeSortedList (list1, list2);
-	print (list1);
+	cout << intersectionLinked (list1, list2) << endl;
 }
 
