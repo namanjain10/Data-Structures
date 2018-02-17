@@ -341,6 +341,19 @@ void reversePrint (Node* add) {
 	cout << add->val << " ";
 }
 
+void removeDuplicateSorted (List* list) {
+	Node* add = list->head, *temp;
+
+	while (add->next != NULL) {
+		if (add->next->val == add->val) {
+			temp = add->next->next;
+			delete add->next;							// not worked if deleted add
+			add->next = temp;
+		}
+		else add = add->next;
+	}
+}
+
 int main() {
 	// List* list = newList();
 	// cout << findLengthItter(list) << endl;
@@ -373,12 +386,13 @@ int main() {
 	// print (list);
 	List* list1 = newList();
 	List* list2 = newList();
-
+	
+	pushList (list1, 10);
 	pushList (list1, 10);
 	pushList (list1, 20);
-	pushList (list1, 23);
+	pushList (list1, 20);
 	pushList (list1, 30);
-	pushList (list1, 33);
+	pushList (list1, 30);
 	pushList (list1, 49);
 	pushList (list1, 50);
 	pushList (list1, 60);
@@ -394,6 +408,7 @@ int main() {
 	pushList (list2, 70);
 
 	print (list2);
-	reversePrint (list1->head);
+	removeDuplicateSorted (list1);
+	print (list1);
 }
 
