@@ -386,8 +386,7 @@ int main() {
 	// print (list);
 	List* list1 = newList();
 	List* list2 = newList();
-	
-	pushList (list1, 10);
+
 	pushList (list1, 10);
 	pushList (list1, 20);
 	pushList (list1, 20);
