@@ -35,7 +35,6 @@ void insert (Tree* tree, int x) {
 		temp->right = NULL;
 
 		while (add != NULL) {
-			cout << "haha " << x << "\n";
 			if (add->val < x) {
 				if (add->right == NULL) {
 					add->right = temp;
@@ -66,11 +65,23 @@ void print (Node* tree) {
 int countNodes (Node* node) {
 
 	if (node == NULL) return 0;
-	
+
 	int left = countNodes(node->left);
 	int right = countNodes(node->right);
 
 	return left+right+1;
+}
+
+int height (Node* node) {
+
+	if (node == NULL) return 0;
+	
+	int left = height(node->left);
+	int right = height(node->right);
+
+	cout << "val " << node->val << " ret " << max(left, right) + 1 << endl;
+
+	return max(left, right) + 1;
 }
 
 int main() {
@@ -83,5 +94,7 @@ int main() {
 	insert (p, 40);
 	print (p->root);
 	cout << "\n";
-	cout << countNodes(p->root) << endl;
+	cout << "count " << countNodes(p->root) << endl;
+	cout << "height " << height(p->root) << endl;
+
 }
