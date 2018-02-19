@@ -79,8 +79,6 @@ int height (Node* node) {
 	int left = height(node->left);
 	int right = height(node->right);
 
-	cout << "val " << node->val << " ret " << max(left, right) + 1 << endl;
-
 	return max(left, right) + 1;
 }
 
@@ -106,6 +104,20 @@ bool sum(Node* node, int x, int y) {
 	}
 }
 
+int abs (int y) {
+	if (y < 0) return -y;
+	else return y;
+}
+
+bool balanced(Node* node) {
+	if (node == NULL) return 1;
+	int right = height(node->right);
+	int left = height(node->left);
+
+	if (abs(right-left) > 1) return 0;
+	else return 1;
+}
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -129,4 +141,5 @@ int main() {
 	else
 		cout << "There is no root-to-leaf path with sum " << 65 << endl;
 
+	cout << "balanced " << balanced(p->root) << endl;
 }
