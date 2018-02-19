@@ -179,6 +179,33 @@ int countLeafNodes (Node* node, int x) {
 	}
 } 
 
+void printPath (Node* node, int* path, int pathLength) {
+	if (node != NULL) {
+		path[pathLength] = node->val;
+		pathLength ++; 
+	}
+
+	if (node->left == NULL) {
+		if (node->right == NULL) {
+			for (int i=0; i<pathLength; i++) cout << path[i] << " ";
+			cout << endl; 
+		}
+		else printPath (node->right, path, pathLength);
+	}
+	else {
+		if (node->right == NULL) printPath (node->left, path, pathLength);
+		else {
+			printPath (node->left, path, pathLength);
+			printPath (node->right, path, pathLength);
+		}
+	}
+}
+
+void printRootLeafPaths (Node* root) {
+	int path[1000];
+	printPath (root, path, 0);
+}
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -206,4 +233,5 @@ int main() {
 	cout << "diameter " << diameter(p->root) << endl;
 	cout << "children sum " << childrenSumProperty(p->root) << endl;
 	cout << "count leaf " << countLeafNodes(p->root, 0) << endl;
+	printRootLeafPaths (p->root);
 }
