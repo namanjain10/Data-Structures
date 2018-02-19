@@ -118,6 +118,13 @@ bool balanced(Node* node) {
 	else return 1;
 }
 
+int diameter (Node* node) {
+	int right = height(node->right);
+	int left = height(node->left);
+
+	return (right+left) + 1;
+}
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -142,4 +149,6 @@ int main() {
 		cout << "There is no root-to-leaf path with sum " << 65 << endl;
 
 	cout << "balanced " << balanced(p->root) << endl;
+	cout << "diameter " << diameter(p->root) << endl;
+
 }
