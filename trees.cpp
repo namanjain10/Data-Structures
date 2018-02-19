@@ -119,10 +119,46 @@ bool balanced(Node* node) {
 }
 
 int diameter (Node* node) {
+	if (node == NULL) return 0;
+
 	int right = height(node->right);
 	int left = height(node->left);
 
 	return (right+left) + 1;
+}
+
+bool childrenSumProperty (Node* node) {
+	if (node == NULL) return 1;
+
+	bool r, l;
+	
+	if (node->right == NULL) {
+		if (node->left == NULL) {
+			return 1;
+		}
+		else {
+			if (node->val == node->left->val) {
+				return childrenSumProperty (node->left);
+			}
+			else return 0;
+		}
+	}
+	else {
+		if (node->left == NULL) {
+			if (node->val == node->right->val) {
+				return childrenSumProperty (node->right);
+			}
+			else return 0;
+		}
+		else {
+			if (node->val == (node->left->val + node->right->val)) {
+				r = childrenSumProperty (node->right);
+				l = childrenSumProperty (node->left);
+				return r&&l;
+			}
+			else return 0;
+		}
+	}
 }
 
 int main() {
@@ -150,5 +186,5 @@ int main() {
 
 	cout << "balanced " << balanced(p->root) << endl;
 	cout << "diameter " << diameter(p->root) << endl;
-
+	cout << "children sum " << childrenSumProperty(p->root) << endl;
 }
