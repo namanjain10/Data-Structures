@@ -161,6 +161,24 @@ bool childrenSumProperty (Node* node) {
 	}
 }
 
+int countLeafNodes (Node* node, int x) {
+	if (node == NULL) return x;
+
+	if (node->left == NULL) {
+		if (node->right == NULL) return x+1;
+		else return countLeafNodes (node->right, x);
+	}
+
+	else {
+		if (node->right == NULL) return countLeafNodes (node->left, x);
+		else {
+			int l = countLeafNodes (node->left, x);
+			int r = countLeafNodes (node->right, x);
+			return l+r;
+		}
+	}
+} 
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -187,4 +205,5 @@ int main() {
 	cout << "balanced " << balanced(p->root) << endl;
 	cout << "diameter " << diameter(p->root) << endl;
 	cout << "children sum " << childrenSumProperty(p->root) << endl;
+	cout << "count leaf " << countLeafNodes(p->root, 0) << endl;
 }
