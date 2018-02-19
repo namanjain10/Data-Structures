@@ -206,6 +206,36 @@ void printRootLeafPaths (Node* root) {
 	printPath (root, path, 0);
 }
 
+void printAncestorsRecursion (Node* node, int key, int* path, int pathLength) {
+	if (node != NULL) {
+		path[pathLength] = node->val;
+		pathLength ++;
+
+		if (node->val == key) {
+			for (int i=pathLength-2; i>=0; i--) cout << path[i] << " ";
+				cout << endl;
+		} 
+	}
+	if (node->left == NULL) {
+		if (node->right == NULL) {
+			return;
+		}
+		else printAncestorsRecursion (node->right, key, path, pathLength);
+	}
+	else {
+		if (node->right == NULL) printAncestorsRecursion (node->left, key, path, pathLength);
+		else {
+			printAncestorsRecursion (node->left, key, path, pathLength);
+			printAncestorsRecursion (node->right, key, path, pathLength);
+		}
+	}
+}
+
+void printAncestors (Node* root, int key) {
+	int path[1000];
+	printAncestorsRecursion (root, key, path, 0);
+}
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -233,5 +263,6 @@ int main() {
 	cout << "diameter " << diameter(p->root) << endl;
 	cout << "children sum " << childrenSumProperty(p->root) << endl;
 	cout << "count leaf " << countLeafNodes(p->root, 0) << endl;
-	printRootLeafPaths (p->root);
+	//printRootLeafPaths (p->root);
+	printAncestors (p->root, 10);
 }
