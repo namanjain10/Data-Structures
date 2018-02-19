@@ -84,6 +84,28 @@ int height (Node* node) {
 	return max(left, right) + 1;
 }
 
+bool sum(Node* node, int x, int y) {
+	bool t, r;
+
+	if (node->right == NULL) {
+		if(node->left == NULL) {
+			if (node->val+x == y) return true;
+			else return false;
+		}
+		else return sum(node->left, node->val + x, y);
+	}
+	else {
+		if (node->left == NULL) return sum(node->right, node->val + x, y);
+		
+		else {
+			t = sum(node->left, node->val + x, y);
+			r = sum(node->right, node->val + x, y);
+
+			return r||t;
+		}
+	}
+}
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -96,5 +118,15 @@ int main() {
 	cout << "\n";
 	cout << "count " << countNodes(p->root) << endl;
 	cout << "height " << height(p->root) << endl;
+
+	if(sum(p->root, 0, 60))
+		cout << "There is a root-to-leaf path with sum " << 60 << endl;
+	else
+		cout << "There is no root-to-leaf path with sum " << 60 << endl;
+
+	if(sum(p->root, 0, 65))
+		cout << "There is a root-to-leaf path with sum " << 65 << endl;
+	else
+		cout << "There is no root-to-leaf path with sum " << 65 << endl;
 
 }
