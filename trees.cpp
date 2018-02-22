@@ -13,12 +13,12 @@ struct Tree {
 
 Tree* newTree () {
 	Tree* p = new Tree;
-	p->root = NULL; 
+	p->root = NULL;
 	return p;
-}  
+}
 
 void insert (Tree* tree, int x) {
-	
+
 	Node* add = tree->root;
 
 	if (add == NULL) {
@@ -53,13 +53,23 @@ void insert (Tree* tree, int x) {
 	}
 }
 
-void print (Node* tree) {
+void printIn (Node* tree) {
 
 	if (tree == NULL) return;
-	
+
+	printIn (tree->left);
 	cout << tree->val << " ";
-	print (tree->left);
-	print (tree->right); 
+	printIn (tree->right);
+}
+
+void printPre (Node* tree) {
+
+	if (tree == NULL) return;
+
+	cout << tree->val << " ";
+
+	printPre (tree->left);
+	printPre (tree->right);
 }
 
 int countNodes (Node* node) {
@@ -75,7 +85,7 @@ int countNodes (Node* node) {
 int height (Node* node) {
 
 	if (node == NULL) return 0;
-	
+
 	int left = height(node->left);
 	int right = height(node->right);
 
@@ -94,7 +104,7 @@ bool sum(Node* node, int x, int y) {
 	}
 	else {
 		if (node->left == NULL) return sum(node->right, node->val + x, y);
-		
+
 		else {
 			t = sum(node->left, node->val + x, y);
 			r = sum(node->right, node->val + x, y);
@@ -131,7 +141,7 @@ bool childrenSumProperty (Node* node) {
 	if (node == NULL) return 1;
 
 	bool r, l;
-	
+
 	if (node->right == NULL) {
 		if (node->left == NULL) {
 			return 1;
@@ -177,18 +187,18 @@ int countLeafNodes (Node* node, int x) {
 			return l+r;
 		}
 	}
-} 
+}
 
 void printPath (Node* node, int* path, int pathLength) {
 	if (node != NULL) {
 		path[pathLength] = node->val;
-		pathLength ++; 
+		pathLength ++;
 	}
 
 	if (node->left == NULL) {
 		if (node->right == NULL) {
 			for (int i=0; i<pathLength; i++) cout << path[i] << " ";
-			cout << endl; 
+			cout << endl;
 		}
 		else printPath (node->right, path, pathLength);
 	}
@@ -214,7 +224,7 @@ void printAncestorsRecursion (Node* node, int key, int* path, int pathLength) {
 		if (node->val == key) {
 			for (int i=pathLength-2; i>=0; i--) cout << path[i] << " ";
 				cout << endl;
-		} 
+		}
 	}
 	if (node->left == NULL) {
 		if (node->right == NULL) {
@@ -236,6 +246,29 @@ void printAncestors (Node* root, int key) {
 	printAncestorsRecursion (root, key, path, 0);
 }
 
+int findNode(int* in, int x, int start, int end) {
+	for (int i=start; i<=end; i++) {
+		if (in[i] == x) return i;
+	}
+}
+
+Node* constTree (int* in, int* pre, int start, int end){
+
+	static int preCount = 0;
+
+	if (end-start < 0) return NULL;
+
+	Node* add = new Node;
+	add->val = pre[preCount];
+	cout << "time for " << add->val << endl;
+	preCount++;
+	
+	int i = findNode(in, add->val, start, end);
+	add->left = constTree(in, pre, start, i-1);
+	add->right = constTree(in, pre, i+1, end);
+	return add;
+}
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -244,7 +277,7 @@ int main() {
 	insert (p, 5);
 	insert (p, 25);
 	insert (p, 40);
-	print (p->root);
+	printIn (p->root);
 	cout << "\n";
 	cout << "count " << countNodes(p->root) << endl;
 	cout << "height " << height(p->root) << endl;
@@ -265,4 +298,13 @@ int main() {
 	cout << "count leaf " << countLeafNodes(p->root, 0) << endl;
 	//printRootLeafPaths (p->root);
 	printAncestors (p->root, 10);
+
+	int in[] = {5,4,6,2,1,3,8,7};
+	int pre[] = {1,2,4,5,6,3,7,8};
+
+	Node* add = constTree (in, pre, 0, 7);
+	printIn(add);
+	cout << "\n";
+	printPre(add);
+	cout << "\n";
 }
