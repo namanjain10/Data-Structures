@@ -72,6 +72,15 @@ void printPre (Node* tree) {
 	printPre (tree->right);
 }
 
+void printPost(Node* tree) {
+	if (tree == NULL) return;
+
+	printPost (tree->left);
+	printPost (tree->right);
+	cout << tree->val << " ";
+
+}
+
 int countNodes (Node* node) {
 
 	if (node == NULL) return 0;
@@ -252,7 +261,7 @@ int findNode(int* in, int x, int start, int end) {
 	}
 }
 
-Node* constTree (int* in, int* pre, int start, int end){
+Node* constTreeInPre (int* in, int* pre, int start, int end){
 
 	static int preCount = 0;
 
@@ -262,10 +271,26 @@ Node* constTree (int* in, int* pre, int start, int end){
 	add->val = pre[preCount];
 	cout << "time for " << add->val << endl;
 	preCount++;
-	
+
 	int i = findNode(in, add->val, start, end);
-	add->left = constTree(in, pre, start, i-1);
-	add->right = constTree(in, pre, i+1, end);
+	add->left = constTreeInPre(in, pre, start, i-1);
+	add->right = constTreeInPre(in, pre, i+1, end);
+	return add;
+}
+
+Node* constTreeInPost (int* in, int* post, int postStart, int postEnd, int start, int end) {
+
+	if (end - start < 0) return NULL;
+
+	Node* add = new Node;
+	add->val = post[postEnd];
+
+	int i = findNode(in, post[postEnd], start, end);
+	int number = i-start;
+
+	add->left = constTreeInPost(in, post, postStart, postStart+number-1, start, i-1);
+	add->right = constTreeInPost(in, post, postStart+number, postEnd-1, i+1, end);
+
 	return add;
 }
 
@@ -299,12 +324,25 @@ int main() {
 	//printRootLeafPaths (p->root);
 	printAncestors (p->root, 10);
 
-	int in[] = {5,4,6,2,1,3,8,7};
 	int pre[] = {1,2,4,5,6,3,7,8};
+	int in[] = {5,4,6,2,1,3,8,7};
+	int post[] = {5,6,4,2,8,7,3,1};
 
-	Node* add = constTree (in, pre, 0, 7);
+	Node* add = constTreeInPre (in, pre, 0, 7);
+	cout << "PreIn\n";
 	printIn(add);
 	cout << "\n";
 	printPre(add);
+	cout << "\n";
+	printPost(add);
+	cout << "\n";
+
+	Node* inPost = constTreeInPost (in, post, 0, 7, 0, 7);
+	cout << "postIn \n";
+	printIn(inPost);
+	cout << "\n";
+	printPre(inPost);
+	cout << "\n";
+	printPost(inPost);
 	cout << "\n";
 }
