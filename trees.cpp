@@ -321,6 +321,21 @@ int sumLeaf(Node* add, int sum) {
 		return y+z;
 	}
 }
+int maximum(int max, int y, int z) {
+	if (max < y) max = y;
+	if (max < z) max = z;
+	return max;
+}
+
+int maxElement (Node* add, int max) {
+	if (add == NULL) return max;
+
+	if (add->val > max) max = add->val;
+	int y = maxElement(add->left, max);
+	int z = maxElement(add->right, max);
+
+	return maximum(max,y,z);
+}
 
 int main() {
 	Tree* p = newTree();
@@ -376,4 +391,5 @@ int main() {
 
 	cout << "Left leaf sum " << sumLeftLeaf(inPost, 0) << endl;
 	cout << "all leaf sum " << sumLeaf(inPost, 0) << endl;
+	cout << "max element " << maxElement(inPost, -1000000) << endl;
 }
