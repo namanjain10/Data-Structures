@@ -294,6 +294,34 @@ Node* constTreeInPost (int* in, int* post, int postStart, int postEnd, int start
 	return add;
 }
 
+int sumLeftLeaf(Node* add, int sum) {
+
+	if (add == NULL) return 0;
+
+	if (add->left != NULL && add->left->left == NULL && add->left->right == NULL) {
+		int x = sumLeftLeaf(add->right, sum);
+		return sum + add->left->val + x;
+	}
+	else {
+		int y = sumLeftLeaf(add->left, sum);
+		int z = sumLeftLeaf(add->right, sum);
+		return y+z;
+	}
+}
+
+int sumLeaf(Node* add, int sum) {
+
+	if (add == NULL) return 0;
+
+	if (add->left == NULL && add->right == NULL) return sum + add->val;
+
+	else {
+		int y = sumLeaf(add->left, sum);
+		int z = sumLeaf(add->right, sum);
+		return y+z;
+	}
+}
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -345,4 +373,7 @@ int main() {
 	cout << "\n";
 	printPost(inPost);
 	cout << "\n";
+
+	cout << "Left leaf sum " << sumLeftLeaf(inPost, 0) << endl;
+	cout << "all leaf sum " << sumLeaf(inPost, 0) << endl;
 }
