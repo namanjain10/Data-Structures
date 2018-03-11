@@ -261,21 +261,27 @@ int findNode(int* in, int x, int start, int end) {
 	}
 }
 
-Node* constTreeInPre (int* in, int* pre, int start, int end){
-
-	static int preCount = 0;
+Node* constTreeInPre1 (int* in, int* pre, int start, int end, int* preCount){
 
 	if (end-start < 0) return NULL;
 
 	Node* add = new Node;
-	add->val = pre[preCount];
-	cout << "time for " << add->val << endl;
-	preCount++;
+	add->val = pre[*preCount];
+	(*preCount)++;
+
+    for(int i=start;i<end;i++) {
+        if(in[i]==pre[(*preCount)-1]) break;
+    }
 
 	int i = findNode(in, add->val, start, end);
-	add->left = constTreeInPre(in, pre, start, i-1);
-	add->right = constTreeInPre(in, pre, i+1, end);
+	add->left = constTreeInPre1(in, pre, start, i-1, preCount);
+	add->right = constTreeInPre1(in, pre, i+1, end, preCount);
 	return add;
+}
+
+Node* constTreeInPre (int* in, int* pre, int start, int end){
+	int preCount = 0;
+	return constTreeInPre1 (in, pre, start, end, &preCount);
 }
 
 Node* constTreeInPost (int* in, int* post, int postStart, int postEnd, int start, int end) {
@@ -321,9 +327,18 @@ int sumLeaf(Node* add, int sum) {
 		return y+z;
 	}
 }
+
 int maximum(int max, int y, int z) {
 	if (max < y) max = y;
 	if (max < z) max = z;
+	return max;
+}
+
+int minimum(int max, int y, int z) {
+	if (max > y) max = y;
+	if (max >
+
+		 z) max = z;
 	return max;
 }
 
@@ -335,6 +350,25 @@ int maxElement (Node* add, int max) {
 	int z = maxElement(add->right, max);
 
 	return maximum(max,y,z);
+}
+
+int minLeafDist (Node* add, int min) {
+	if (add == NULL) return min;
+	if (add->left == NULL && add->right == NULL) return 0;
+	int x = minLeafDist (add->left, min);
+	int y = minLeafDist (add->right, min);
+	return minimum(x+1, y+1, min);
+}
+
+int minLeafNode (Node* add, int a) {
+	if (add == NULL) return 100000;
+	if (add->val == a) {
+		return minLeafDist (add, 1000000);
+	}
+	int x = minLeafNode (add->left, a);
+	int y = minLeafNode (add->right, a);
+	if (x<y) return x;
+	else return y;
 }
 
 int main() {
@@ -392,4 +426,31 @@ int main() {
 	cout << "Left leaf sum " << sumLeftLeaf(inPost, 0) << endl;
 	cout << "all leaf sum " << sumLeaf(inPost, 0) << endl;
 	cout << "max element " << maxElement(inPost, -1000000) << endl;
+	cout << "min Leaf dist of 2 is " << minLeafNode(inPost, 2) << endl;
+	cout << "min Leaf dist of 4 is " << minLeafNode(inPost, 4) << endl;
+	cout << "min Leaf dist of 1 is " << minLeafNode(inPost, 1) << endl;
+
+	int pre1[] = {1,2,3,4,5,6,7,8,9,10};
+	int in1[] = {3,2,7,6,8,5,4,1,10,9};
+
+	Node* inPre1 = constTreeInPre (in1, pre1, 0, 9);
+	printPre(inPre1);
+	cout << '\n';
+
+	cout << "min Leaf dist of 2 is " << minLeafNode(inPre1, 2) << endl;
+	cout << "min Leaf dist of 4 is " << minLeafNode(inPre1, 4) << endl;
+
 }
+
+/*
+struct tNode *root = newtNode(1);
+root->left	 = newtNode(2);
+root->left->left	 = newtNode(3);
+root->left->right	 = newtNode(4);
+root->left->right->left = newtNode(5);
+root->left->right->left->left  = newtNode(6);
+root->left->right->left->left->left  = newtNode(7);
+root->left->right->left->left->right  = newtNode(8);
+root->right = newtNode(9);
+root->right->left = newtNode(10);
+*/
