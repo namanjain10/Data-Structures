@@ -429,6 +429,24 @@ void printLevelOrderQueue(Node* add) {
 	}
 }
 
+void printNoSiblings (Node* add) {
+	if (add == NULL) return;
+
+	if (add->right != NULL && add->left != NULL) {
+		printNoSiblings (add->right);
+		printNoSiblings (add->left);
+	}
+	else if (add->right != NULL) {
+		cout << add->right->val << " ";
+		printNoSiblings (add->right);
+	}
+	else if (add->left != NULL) {
+		cout << add->left->val << " ";
+		printNoSiblings (add->left);
+	}
+
+}
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -507,6 +525,9 @@ int main() {
 	std::cout << '\n';
 	std::cout << "printLevelOrderQueue" << '\n';
 	printLevelOrderQueue(inPre1);
+	std::cout << '\n';
+
+	printNoSiblings(inPre1);
 	std::cout << '\n';
 }
 
