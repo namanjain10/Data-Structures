@@ -1,4 +1,6 @@
 #include <iostream>
+#include <queue>
+
 using namespace std;
 
 struct Node {
@@ -396,6 +398,37 @@ void verticalPrint(Node* add) {
 	}
 }
 
+void printSameLevel(Node* add, int h, int k) {
+	if (add == NULL) return;
+	if (h == k) {
+		cout << add->val << ' ';
+		return;
+	}
+	printSameLevel(add->left, h+1, k);
+	printSameLevel(add->right, h+1, k);
+}
+
+void printLevelOrder(Node* add) {
+	int h = height (add);
+	for (int i=0; i<=h; i++) {
+		printSameLevel(add, 0, i);
+	}
+}
+
+void printLevelOrderQueue(Node* add) {
+	if (add == NULL) return;
+	queue <Node *> q;
+	q.push(add);
+
+	while (!q.empty()) {
+		Node* temp = q.front();
+		cout << temp->val << " ";
+		q.pop();
+		if (temp->left != NULL) q.push(temp->left);
+		if (temp->right != NULL) q.push(temp->right);
+	}
+}
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -466,6 +499,15 @@ int main() {
 	cout << "min Leaf dist of 4 is " << minLeafNode(inPre1, 4) << endl;
 	std::cout << "verticalPrint " << '\n';
 	verticalPrint(inPre1);
+	std::cout << "printLevelOrder" << '\n';
+	printLevelOrder(inPost);
+	std::cout << '\n';
+	std::cout << "printLevelOrder" << '\n';
+	printLevelOrder(inPre1);
+	std::cout << '\n';
+	std::cout << "printLevelOrderQueue" << '\n';
+	printLevelOrderQueue(inPre1);
+	std::cout << '\n';
 }
 
 /*
