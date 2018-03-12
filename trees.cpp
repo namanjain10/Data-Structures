@@ -371,6 +371,31 @@ int minLeafNode (Node* add, int a) {
 	else return y;
 }
 
+void minMax(Node* add, int* min, int* max, int h) {
+	if (add == NULL) return;
+	if (*min > h) *min = h;
+	if (*max < h) *max = h;
+
+	minMax(add->left, min, max, h-1);
+	minMax(add->right, min, max, h+1);
+}
+
+void printLevel(Node* add, int h, int k) {
+	if (add == NULL) return;
+	if (h == k) cout << add->val << ' ';
+	printLevel(add->left, h-1, k);
+	printLevel(add->right, h+1, k);
+}
+
+void verticalPrint(Node* add) {
+	int min = 0, max = 0;
+	minMax(add, &min, &max, 0);
+	for (int i=min; i<=max; i++) {
+		printLevel(add, 0, i);
+		std::cout << '\n';
+	}
+}
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -439,7 +464,8 @@ int main() {
 
 	cout << "min Leaf dist of 2 is " << minLeafNode(inPre1, 2) << endl;
 	cout << "min Leaf dist of 4 is " << minLeafNode(inPre1, 4) << endl;
-
+	std::cout << "verticalPrint " << '\n';
+	verticalPrint(inPre1);
 }
 
 /*
