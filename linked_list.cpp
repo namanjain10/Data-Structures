@@ -7,7 +7,7 @@ struct Node {
 };
 
 struct List {
-	Node* head;	
+	Node* head;
 };
 
 List* newList () {
@@ -53,13 +53,13 @@ void reverse (List* list) {
 	Node* next;
 
 	while (add->next != NULL) {
-		next = add->next;	
+		next = add->next;
 		add->next = prev;
 		prev = add;
 		add = next;
 	}
 	add->next = prev;
-	list->head = add; 
+	list->head = add;
 }
 
 int findLengthItter (List* list) {
@@ -77,13 +77,13 @@ int findLengthRecursive (Node* add, int count) {
 		return count;
 	}
 	else {
-		return findLengthRecursive(add->next, count+1); 
+		return findLengthRecursive(add->next, count+1);
 	}
 }
 
 void deleteNode (List* list, int x) {
-	// if want to delete all then remove break and else 
-	Node* temp, *add =  list->head; 
+	// if want to delete all then remove break and else
+	Node* temp, *add =  list->head;
 	if (add->val == x) {
 		list->head = add->next;
 		delete add;
@@ -103,14 +103,14 @@ void deleteNode (List* list, int x) {
 }
 
 void swapNode(Node*& a, Node*& b) {
- 
+
     Node* temp = a;
     a = b;
     b = temp;
 }
 
 void swap (Node** head, int x, int y) {
-	if (x == y) return; 
+	if (x == y) return;
 
 	Node** add = head, **temp1, **temp2, **a, **b, **temp;
 	int count = 0, q = 0;
@@ -159,7 +159,7 @@ int middleNode (List* list) {
 		}
 		doub = doub->next->next;
 		add = add->next;
-		
+
 	}
 	return add->val;
 }
@@ -171,9 +171,9 @@ int nthNodeEnd (List* list, int i) {
 	}
 	while (add != NULL) {
 		add = add->next;
-		ref = ref->next; 
+		ref = ref->next;
 	}
-	return ref->val; 
+	return ref->val;
 }
 
 void deleteLinkedList (List* list) {
@@ -181,9 +181,9 @@ void deleteLinkedList (List* list) {
 	while (add != NULL) {
 		temp = add->next;
 		delete add;
-		add = temp; 
+		add = temp;
 	}
-	list->head = NULL; 
+	list->head = NULL;
 }
 
 int countFreq (List *list, int x) {
@@ -194,7 +194,7 @@ int countFreq (List *list, int x) {
 		if (add->val == x) count++;
 		add = add->next;
 	}
-	return count; 
+	return count;
 }
 
 int loop (List* list) {
@@ -229,7 +229,7 @@ void MaxSumList (List* list1, List* list2) {
 		if (add2 == NULL) break;
 
 		cout << "add " << add1->val << " "<< add2->val << endl;
-			
+
 		if (add1->val == add2->val) {
 			if (q == 0) {
 				temp1 = add1;
@@ -258,10 +258,10 @@ void MaxSumList (List* list1, List* list2) {
 				count2 = 0;
 			}
 		}
-		
+
 		if (q == 1) {
 			count1 += add1->val;
-			count2 += add2->val; 
+			count2 += add2->val;
 		}
 		add1 = add1->next;
 		add2 = add2->next;
@@ -290,7 +290,7 @@ void MergeSortedList (List* list1, List* list2) {
 		if (add1->val < add2->val) {
 			add->next = add1;
 			add1 = add1->next;
-			add = add->next;	
+			add = add->next;
 		}
 		else {
 			add->next = add2;
@@ -325,7 +325,7 @@ int intersectionLinked (List* list1, List* list2) {
 
  	while (add1 != NULL) {
  		if (add1 == add2) {
- 			add = add1;	
+ 			add = add1;
  			break;
  		}
  		add1 = add1->next;
@@ -333,7 +333,7 @@ int intersectionLinked (List* list1, List* list2) {
  	}
  	if (add == NULL) return 0;
  	return add->val;
-} 
+}
 
 void reversePrint (Node* add) {
 	if (add == NULL) return;
@@ -352,6 +352,126 @@ void removeDuplicateSorted (List* list) {
 		}
 		else add = add->next;
 	}
+}
+
+void swapNum (Node* x, Node* y) {
+	int temp = x->val;
+	x->val = y->val;
+	y->val = temp;
+}
+
+void oddEven1 (Node* add) {
+
+	Node* odd = add, *even = add, *temp;
+	int oddNum = 0, evenNum = 0, tempNum;
+
+	while (odd->val % 2 != 1 && odd != NULL) {
+		odd = odd->next;
+		oddNum++;
+	}
+	while (even->val % 2 != 0 && even != NULL) {
+		even = even->next;
+		evenNum++;
+	}
+
+	while (even->next != NULL || odd->next != NULL) {
+		if (oddNum < evenNum) {
+			cout << "swap " << odd->val << " " << even->val << endl;
+			swapNum (odd, even);
+			if (odd->next != NULL) {
+				if (odd->next->val % 2 == 0) {
+					temp = even;
+					even = odd;
+					odd = temp;
+					tempNum = evenNum;
+					evenNum = oddNum;
+					oddNum = tempNum;
+				}
+				else {
+					odd = odd->next;
+					oddNum++;
+				}
+			}
+			if (even->next != NULL) {
+				if (even->next->val % 2 == 1) {
+					temp = even;
+					even = odd;
+					odd = temp;
+					tempNum = evenNum + 1;
+					evenNum = oddNum + 1;
+					oddNum = tempNum;
+				}
+				else {
+					even = even->next;
+					evenNum++;
+				}
+			}
+		}
+		cout << "set" << endl;
+		while (odd != NULL && odd->val % 2 != 1) {
+			odd = odd->next;
+			oddNum++;
+			cout << "setodd1" << endl;
+		}
+		while (even != NULL && even->val % 2 != 0) {
+			even = even->next;
+			evenNum++;
+			cout << "seteven1" << endl;
+		}
+	}
+	cout << "entered \n";
+}
+
+// void oddEven (Node* add) {
+// 	Node* put, *even;
+// 	put = add;
+//
+// 	while (put != NULL && put->val % 2 != 0 && put->next->val % 2 != 0)  {
+// 		put = put->next;
+// 	}
+// 	even = put->next;
+//
+// 	while (even != NULL) {
+// 		if (even->val % 2 == 0) {
+// 			temp = put->next->next;
+// 			put->next = even;
+// 			even = even->next;
+// 		}
+// 		even = even->next;
+// 	}
+// }
+
+void mergeAlternate (Node* add1, Node* add2) {
+	Node *temp1, *temp;
+	while (add1 != NULL || add2 != NULL) {
+		temp1 = add1->next;
+		temp = add2	;
+		if (add2 != NULL) {
+			add2 = add2->next;
+			add1->next = temp;
+			add1->next->next = temp1;
+		}
+		if (add1->next != NULL) {
+			if (add1->next->next != NULL) {
+				add1 = add1->next->next;
+			}
+			else break;
+		}
+		else break;
+	}
+	if (add2 != NULL) {
+		while (add1->next != NULL) {
+			add1 = add1->next;
+		}
+		add1->next = add2;
+	}
+}
+
+Node* mergedAlternate (Node* add1, Node* add2) {
+	Node* add;
+	add = add1;
+	add1 = add->next;
+
 }
 
 int main() {
@@ -405,9 +525,30 @@ int main() {
 	pushList (list2, 36);
 	pushList (list2, 49);
 	pushList (list2, 70);
+	pushList (list2, 71);
+	pushList (list2, 91);
 
 	print (list2);
-	removeDuplicateSorted (list1);
-	print (list1);
-}
 
+	// removeDuplicateSorted (list1);
+	// print (list1);
+
+	List* list3 = newList();
+
+	pushList (list3, 11);
+	pushList (list3, 20);
+	pushList (list3, 21);
+	pushList (list3, 30);
+	pushList (list3, 31);
+	pushList (list3, 49);
+	pushList (list3, 51);
+	pushList (list3, 60);
+
+
+	// oddEven(list3->head);
+	// cout << "list " ;
+	print (list3);
+
+	mergeAlternate (list2->head, list3->head);
+	print (list2);
+}
