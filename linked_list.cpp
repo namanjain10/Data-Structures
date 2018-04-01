@@ -47,6 +47,18 @@ void print (List* add) {
 	cout << "\n";
 }
 
+void printList (Node* start) {
+	if (start == NULL) {
+		return;
+	}
+
+	while (start != NULL) {
+		cout << start->val << " ";
+		start = start->next;
+	}
+	cout << "\n";
+}
+
 void reverse (List* list) {
 	Node* add = list->head;
 	Node* prev = NULL;
@@ -360,86 +372,65 @@ void swapNum (Node* x, Node* y) {
 	y->val = temp;
 }
 
-void oddEven1 (Node* add) {
+void oddEven (List* f) {
+	Node* add = f->head;
+	Node* put, *next1, *temp, *temp1;
 
-	Node* odd = add, *even = add, *temp;
-	int oddNum = 0, evenNum = 0, tempNum;
+	if (add->val %2 == 0) {
+		put = add;
+		while (put->next != NULL && put->next->val %2 != 1) {
+			put = put->next;
+		}
+		next1 = put;
 
-	while (odd->val % 2 != 1 && odd != NULL) {
-		odd = odd->next;
-		oddNum++;
-	}
-	while (even->val % 2 != 0 && even != NULL) {
-		even = even->next;
-		evenNum++;
-	}
-
-	while (even->next != NULL || odd->next != NULL) {
-		if (oddNum < evenNum) {
-			cout << "swap " << odd->val << " " << even->val << endl;
-			swapNum (odd, even);
-			if (odd->next != NULL) {
-				if (odd->next->val % 2 == 0) {
-					temp = even;
-					even = odd;
-					odd = temp;
-					tempNum = evenNum;
-					evenNum = oddNum;
-					oddNum = tempNum;
-				}
-				else {
-					odd = odd->next;
-					oddNum++;
-				}
+		while (next1->next != NULL) {
+			if (next1->next->val %2 == 0) {
+				temp = put->next;
+				temp1 = next1->next->next;
+				put->next = next1->next;
+				put = put->next;
+				put->next = temp;
+				next1->next = temp1;
 			}
-			if (even->next != NULL) {
-				if (even->next->val % 2 == 1) {
-					temp = even;
-					even = odd;
-					odd = temp;
-					tempNum = evenNum + 1;
-					evenNum = oddNum + 1;
-					oddNum = tempNum;
-				}
-				else {
-					even = even->next;
-					evenNum++;
-				}
+			else {
+				next1 = next1->next;
 			}
 		}
-		cout << "set" << endl;
-		while (odd != NULL && odd->val % 2 != 1) {
-			odd = odd->next;
-			oddNum++;
-			cout << "setodd1" << endl;
-		}
-		while (even != NULL && even->val % 2 != 0) {
-			even = even->next;
-			evenNum++;
-			cout << "seteven1" << endl;
-		}
 	}
-	cout << "entered \n";
+	else {
+		put = add;
+		while (put->next != NULL && put->next->val %2 != 0) {
+			put = put->next;
+		}
+		next1 = put;
+
+		while (next1->next != NULL) {
+			if (next1->next->val %2 == 1) {
+				temp = put->next;
+				temp1 = next1->next->next;
+				put->next = next1->next;
+				put = put->next;
+				put->next = temp;
+				next1->next = temp1;
+			}
+			else {
+				next1 = next1->next;
+			}
+		}
+		temp = add;
+		add = put->next;
+		Node* s = add;
+		while (s->next!= NULL) {
+			s = s->next;
+		}
+		s->next = temp;
+		while (s->next!= put) {
+			s = s->next;
+		}
+		s->next = NULL;
+		f->head = add;
+	}
 }
-
-// void oddEven (Node* add) {
-// 	Node* put, *even;
-// 	put = add;
-//
-// 	while (put != NULL && put->val % 2 != 0 && put->next->val % 2 != 0)  {
-// 		put = put->next;
-// 	}
-// 	even = put->next;
-//
-// 	while (even != NULL) {
-// 		if (even->val % 2 == 0) {
-// 			temp = put->next->next;
-// 			put->next = even;
-// 			even = even->next;
-// 		}
-// 		even = even->next;
-// 	}
-// }
 
 void mergeAlternate (Node* add1, Node* add2) {
 	Node *temp1, *temp;
@@ -535,7 +526,7 @@ int main() {
 
 	List* list3 = newList();
 
-	pushList (list3, 11);
+	pushList (list3, 10);
 	pushList (list3, 20);
 	pushList (list3, 21);
 	pushList (list3, 30);
@@ -544,9 +535,9 @@ int main() {
 	pushList (list3, 51);
 	pushList (list3, 60);
 
-
-	// oddEven(list3->head);
-	// cout << "list " ;
+	// oddEven1(list3->head);
+	oddEven(list3);
+	cout << "list3 " ;
 	print (list3);
 
 	mergeAlternate (list2->head, list3->head);
