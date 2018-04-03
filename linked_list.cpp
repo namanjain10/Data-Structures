@@ -465,6 +465,90 @@ Node* mergedAlternate (Node* add1, Node* add2) {
 
 }
 
+void ReverseAlternateKNodes (List* list, int k) {
+	int count = 0;
+	Node* add = list->head;
+	Node* start, *end;
+
+	while (count != k) {
+		if (count == 0) start = add;
+		if (count == k) end = add;
+
+		// add
+	}
+}
+
+void sumLinked (List* list1, List* list2) {
+	reverse(list1);
+	reverse(list2);
+
+	Node* add1 = list1->head, *add2 = list2->head;
+	int carry = 0, k = 0;
+
+	while (add1 != NULL || add2 != NULL) {
+		k = add1->val + add2->val + carry;
+		add1->val = k%10;
+		carry = k/10;
+
+		if (add1->next == NULL) break;
+		add1 = add1->next;
+
+		if (add2->next == NULL) break;
+		add2 = add2->next;
+	}
+
+	while (add1 != NULL) {
+		k = carry + add1->val;
+		carry = k/10;
+		add1->val = k%10;
+		if (add1->next == NULL) break;
+		add1 = add1->next;
+	}
+
+	if (carry != 0) {
+		add1->next = new Node;
+		add1->next->val = carry;
+		add1->next->next = NULL;
+	}
+	reverse (list1);
+}
+
+void subLinked (List* list1, List* list2) {
+	reverse(list1);
+	reverse(list2);
+
+	Node* add1 = list1->head, *add2 = list2->head;
+	int borrow = 0, k = 0;
+
+	while (add1 != NULL || add2 != NULL) {
+		if (borrow == 1) {
+			add1->val--;
+			borrow = 0;
+		}
+		if (add1->val >= add2->val) add1->val = add1->val - add2->val;
+		else {
+			add1->val = add1->val + 10 - add2->val;
+			borrow = 1;
+		}
+
+		if (add1->next == NULL) break;
+		add1 = add1->next;
+
+		if (add2->next == NULL) break;
+		add2 = add2->next;
+	}
+	while (borrow != 0) {
+		add1->val--;
+		borrow = 0;
+		if (add1->val < 0) {
+			add1->val = add1->val + 10;
+			borrow = 1;
+		}
+		add1 = add1->next;
+	}
+	reverse (list1);
+}
+
 int main() {
 	// List* list = newList();
 	// cout << findLengthItter(list) << endl;
@@ -534,6 +618,7 @@ int main() {
 	pushList (list3, 49);
 	pushList (list3, 51);
 	pushList (list3, 60);
+	pushList (list3, 71);
 
 	// oddEven1(list3->head);
 	oddEven(list3);
@@ -542,4 +627,28 @@ int main() {
 
 	mergeAlternate (list2->head, list3->head);
 	print (list2);
+
+	List* list4 = newList();
+
+	// pushList (list4, 5);
+	pushList (list4, 1);
+	pushList (list4, 1);
+	pushList (list4, 0);
+	pushList (list4, 0);
+	pushList (list4, 6);
+
+	print (list4);
+
+	List* list5 = newList();
+
+	// pushList (list5, 8);
+	// pushList (list5, 8);
+	// pushList (list5, 5);
+	pushList (list5, 7);
+
+	print (list5);
+
+	subLinked (list4, list5);
+	print (list4);
+
 }
