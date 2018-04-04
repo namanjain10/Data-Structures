@@ -467,14 +467,31 @@ Node* mergedAlternate (Node* add1, Node* add2) {
 
 void ReverseAlternateKNodes (List* list, int k) {
 	int count = 0;
-	Node* add = list->head;
+	Node* curr = list->head;
+	Node* after, *prev;
 	Node* start, *end;
 
+	while (1) {
+		/* code */
+	}
 	while (count != k) {
-		if (count == 0) start = add;
-		if (count == k) end = add;
 
-		// add
+		if (count == 0) {
+			// start = add;
+		}
+
+		after = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = after;
+	}
+}
+
+void zeroPaddingRem (List* list) {
+	Node* add = list->head;
+
+	while (list->head->val == 0) {
+		list->head = list->head->next;
 	}
 }
 
@@ -482,35 +499,67 @@ void sumLinked (List* list1, List* list2) {
 	reverse(list1);
 	reverse(list2);
 
-	Node* add1 = list1->head, *add2 = list2->head;
+	Node* add1 = list1->head, *add2 = list2->head, *temp, *prev = NULL;
 	int carry = 0, k = 0;
 
 	while (add1 != NULL || add2 != NULL) {
-		k = add1->val + add2->val + carry;
-		add1->val = k%10;
-		carry = k/10;
 
-		if (add1->next == NULL) break;
-		add1 = add1->next;
+		k = (add1?add1->val:0) + (add2?add2->val:0) + carry;
+ 		carry = k/10;
 
-		if (add2->next == NULL) break;
-		add2 = add2->next;
-	}
+		if (add1) add1->val = k%10;
+		else {
+			temp = new Node;
+			temp->val = k%10;
+			prev->next = temp;
+		}
+		prev = (add1?add1:temp);
 
-	while (add1 != NULL) {
-		k = carry + add1->val;
-		carry = k/10;
-		add1->val = k%10;
-		if (add1->next == NULL) break;
-		add1 = add1->next;
+		if (add1) add1 = add1->next;
+		if (add2) add2 = add2->next;
 	}
 
 	if (carry != 0) {
-		add1->next = new Node;
-		add1->next->val = carry;
-		add1->next->next = NULL;
+		Node* y = (add1?add1:prev);
+		y->next = new Node;
+		y->next->val = carry;
+		y->next->next = NULL;
 	}
 	reverse (list1);
+}
+
+Node* sumLinked1 (List* list1, List* list2){
+	Node* add1 = list1->head, *add2 = list2->head;
+	Node* res = NULL, *temp, *prev = NULL;
+	int carry = 0, sum;
+
+	while (add1 != NULL || add2 != NULL) {
+
+		if (add2 == NULL) cout << "oh done\n";
+
+		sum = carry + (add1? add1->val: 0) + (add2? add2->val: 0);
+		carry = (sum >= 10) ? 1:0;
+		sum = sum%10;
+		temp = new Node;
+		temp->val = sum;
+
+		if (res == NULL) {
+			res = temp;
+		}
+		else {
+			prev->next = temp;
+		}
+		prev = temp;
+
+		if (add1) add1 = add1->next;
+		if (add2) add2 = add2->next;
+	}
+	if (carry > 0) {
+		prev->next = new Node;
+		prev->next->val = carry;
+		prev->next->next = NULL;
+	}
+	return res;
 }
 
 void subLinked (List* list1, List* list2) {
@@ -547,6 +596,7 @@ void subLinked (List* list1, List* list2) {
 		add1 = add1->next;
 	}
 	reverse (list1);
+	zeroPaddingRem (list1);
 }
 
 int main() {
@@ -631,24 +681,26 @@ int main() {
 	List* list4 = newList();
 
 	// pushList (list4, 5);
-	pushList (list4, 1);
-	pushList (list4, 1);
+	pushList (list4, 9);
 	pushList (list4, 0);
 	pushList (list4, 0);
-	pushList (list4, 6);
+	pushList (list4, 0);
+	pushList (list4, 9);
 
 	print (list4);
 
 	List* list5 = newList();
 
-	// pushList (list5, 8);
-	// pushList (list5, 8);
-	// pushList (list5, 5);
-	pushList (list5, 7);
+	pushList (list5, 9);
+	pushList (list5, 9);
+	pushList (list5, 9);
+	pushList (list5, 9);
 
 	print (list5);
 
-	subLinked (list4, list5);
-	print (list4);
+	// Node* t = sumLinked1 (list4, list5);
+	// printList (t);
 
+	sumLinked (list5, list4);
+	print (list5);
 }
