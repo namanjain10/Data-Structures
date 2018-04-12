@@ -228,57 +228,112 @@ int loop (List* list) {
 }
 
 // incomplete
-void MaxSumList (List* list1, List* list2) {
-	Node* add1 = list1->head, *add2 = list2->head, *temp1 = list1->head, *temp2 = list2->head, addHead;
+// void MaxSumList (List* list1, List* list2) {
+// 	Node* add1 = list1->head, *add2 = list2->head, *temp1 = list1->head, *temp2 = list2->head, addHead;
+//
+// 	int count1 = 0, count2 = 0, q = 1, listNum = 1;
+//
+// 	Node *add = &addHead;
+// 	addHead.next = NULL;
+//
+// 	while (1) {
+// 		if (add1 == NULL) break;
+// 		if (add2 == NULL) break;
+//
+// 		cout << "add " << add1->val << " "<< add2->val << endl;
+//
+// 		if (add1->val == add2->val) {
+// 			if (q == 0) {
+// 				temp1 = add1;
+// 				temp2 = add2;
+// 				q = 1;
+// 			}
+// 			else {
+// 				if (count1 > count2) {
+// 					while (temp1 != add1) {
+// 						cout << "doing1 \n";
+// 						add->next = temp1;
+// 						add = add->next;
+// 						temp1 = temp1->next;
+// 					}
+// 				}
+// 				else {
+// 					while (temp2 != add2) {
+// 						cout << "doing2 \n";
+// 						add->next = temp2;
+// 						add = add->next;
+// 						temp2 = temp2->next;
+// 					}
+// 				}
+// 				q = 0;
+// 				count1 = 0;
+// 				count2 = 0;
+// 			}
+// 		}
+//
+// 		if (q == 1) {
+// 			count1 += add1->val;
+// 			count2 += add2->val;
+// 		}
+// 		add1 = add1->next;
+// 		add2 = add2->next;
+// 	}
+// 	list1->head = addHead.next;
+// }
 
-	int count1 = 0, count2 = 0, q = 1, listNum = 1;
+Node* MaxSumList (List* list1, List* list2) {
+	Node* add1 = list1->head, *add2 = list2->head, *res = NULL, *temp1 = add1, *temp2 = add2, *prev = NULL;
+	int count1 = 0, count2 = 0;
 
-	Node *add = &addHead;
-	addHead.next = NULL;
-
-	while (1) {
-		if (add1 == NULL) break;
-		if (add2 == NULL) break;
-
-		cout << "add " << add1->val << " "<< add2->val << endl;
-
-		if (add1->val == add2->val) {
-			if (q == 0) {
-				temp1 = add1;
-				temp2 = add2;
-				q = 1;
-			}
-			else {
-				if (count1 > count2) {
-					while (temp1 != add1) {
-						cout << "doing1 \n";
-						add->next = temp1;
-						add = add->next;
-						temp1 = temp1->next;
-					}
-				}
-				else {
-					while (temp2 != add2) {
-						cout << "doing2 \n";
-						add->next = temp2;
-						add = add->next;
-						temp2 = temp2->next;
-					}
-				}
-				q = 0;
-				count1 = 0;
-				count2 = 0;
-			}
-		}
-
-		if (q == 1) {
+	while (add1 != NULL && add2 != NULL) {
+		if (add1->val < add2->val) {
 			count1 += add1->val;
-			count2 += add2->val;
+			add1 = add1->next;
 		}
+
+		else if (add1->val > add2->val) {
+			count2 += add2->val;
+			add2 = add2->next;
+		}
+
+		else if (add1->val == add2->val){
+			Node* addTemp = ((count1 > count2) ? temp1:temp2);
+			Node* finally = ((count1 > count2) ? add1:add2);
+
+			while (addTemp != finally) {
+				if (res == NULL) res = addTemp;
+				else prev->next = addTemp;
+
+				prev = addTemp;
+				addTemp = addTemp->next;
+			}
+			count1 = count2 = 0;
+			temp1 = add1;
+			temp2 = add2;
+			add1 = add1->next;
+			add2 = add2->next;
+		}
+	}
+	while (add1 != NULL) {
+		count1 += add1->val;
 		add1 = add1->next;
+	}
+	while (add2 != NULL) {
+		count2 += add2->val;
 		add2 = add2->next;
 	}
-	list1->head = addHead.next;
+
+	Node* addTemp = ((count1 > count2) ? temp1:temp2);
+	Node* finally = ((count1 > count2) ? add1:add2);
+
+	while (addTemp != finally) {
+		if (res == NULL) res = addTemp;
+		else prev->next = addTemp;
+
+		prev = addTemp;
+		addTemp = addTemp->next;
+	}
+	return res;
 }
 
 void MergeSortedList (List* list1, List* list2) {
@@ -599,6 +654,39 @@ void subLinked (List* list1, List* list2) {
 	zeroPaddingRem (list1);
 }
 
+void MergeSortedListRev (List* list1, List* list2) {
+	Node* add1 = list1->head, *add2 = list2->head, *res = NULL, *temp, *temp1;
+
+	while (add1 != NULL && add2 != NULL) {
+		if (add1->val < add2->val) {
+			temp = add1->next;
+			add1->next = res;
+			res = add1;
+			add1 = temp;
+		}
+		else {
+			temp = add2->next;
+			add2->next = res;
+			res = add2;
+			add2 = temp;
+		}
+	}
+	while (add1 != NULL) {
+		temp = add1->next;
+		add1->next = res;
+		res = add1;
+		add1 = temp;
+	}
+	while (add2 != NULL) {
+		temp = add2->next;
+		add2->next = res;
+		res = add2;
+		add2 = temp;
+	}
+
+	list1->head = res;
+}
+
 int main() {
 	// List* list = newList();
 	// cout << findLengthItter(list) << endl;
@@ -668,39 +756,50 @@ int main() {
 	pushList (list3, 49);
 	pushList (list3, 51);
 	pushList (list3, 60);
-	pushList (list3, 71);
+	pushList (list3, 75);
 
-	// oddEven1(list3->head);
-	oddEven(list3);
-	cout << "list3 " ;
 	print (list3);
+	Node* y = MaxSumList(list2, list3);
+	cout << "print MaxSumList\n";
 
-	mergeAlternate (list2->head, list3->head);
-	print (list2);
+	printList (y);
+	// oddEven1(list3->head);
 
-	List* list4 = newList();
-
-	// pushList (list4, 5);
-	pushList (list4, 9);
-	pushList (list4, 0);
-	pushList (list4, 0);
-	pushList (list4, 0);
-	pushList (list4, 9);
-
-	print (list4);
-
-	List* list5 = newList();
-
-	pushList (list5, 9);
-	pushList (list5, 9);
-	pushList (list5, 9);
-	pushList (list5, 9);
-
-	print (list5);
-
-	// Node* t = sumLinked1 (list4, list5);
-	// printList (t);
-
-	sumLinked (list5, list4);
-	print (list5);
+	// MergeSortedListRev(list2, list3);
+	// cout << "list2 ";
+	// print (list2);
+	//
+	// oddEven(list3);
+	// cout << "list3 " ;
+	// print (list3);
+	//
+	// cout << "merge\n";
+	// mergeAlternate (list2->head, list3->head);
+	// print (list2);
+	//
+	// List* list4 = newList();
+	//
+	// // pushList (list4, 5);
+	// pushList (list4, 9);
+	// pushList (list4, 0);
+	// pushList (list4, 0);
+	// pushList (list4, 0);
+	// pushList (list4, 9);
+	//
+	// print (list4);
+	//
+	// List* list5 = newList();
+	//
+	// pushList (list5, 9);
+	// pushList (list5, 9);
+	// pushList (list5, 9);
+	// pushList (list5, 9);
+	//
+	// print (list5);
+	//
+	// // Node* t = sumLinked1 (list4, list5);
+	// // printList (t);
+	//
+	// sumLinked (list5, list4);
+	// print (list5);
 }
