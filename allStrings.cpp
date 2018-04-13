@@ -11,6 +11,19 @@ void printStrings(int n, string s) {
     printStrings(n-1, s+"1");
 }
 
+
+int largestContSum (int* arr, int n) {
+    int largest = 0, large_till = 0;
+
+    for (int i=0; i<n; i++) {
+        large_till += arr[i];
+        if (large_till > largest) largest = large_till;
+
+        else if (large_till < 0) large_till = 0;
+    }
+    return largest;
+}
+
 //Find all Egyptian fractions
 
 void egyptian (int nr, int dr) {
@@ -37,6 +50,9 @@ int main() {
     // // cin >> i;
     // i = 18;
     // printStrings (i, "");
-    egyptian (2, 11223);
+    // egyptian (2, 11223);
+    int arr[] = {-2, -3, 4, -1, -2, 1, 5, -3};
+    int y = largestContSum (arr, 8);
+    cout << y ;
     cout << "\n";
 }
