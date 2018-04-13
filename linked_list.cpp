@@ -653,6 +653,24 @@ void sort012 (List* list) {
 	list->head = temp0;
 }
 
+void insertNthEnd (List* list, int n, int s) {
+	Node* temp0 = list->head, *temp1 = list->head;
+	int i = 0;
+
+	while (i<n) {
+		temp0 = temp0->next;
+		i++;
+	}
+	while (temp0 != NULL) {
+		temp0 = temp0->next;
+		temp1 = temp1->next;
+	}
+	Node* temp = temp1->next;
+	temp1->next = new Node;
+	temp1->next->val = s;
+	temp1->next->next = temp;
+}
+
 int main() {
 	// List* list = newList();
 	// cout << findLengthItter(list) << endl;
@@ -755,10 +773,13 @@ int main() {
 	pushList (list4, 2);
 	pushList (list4, 0);
 	pushList (list4, 1);
-	
+
 	print (list4);
 	sort012 (list4);
 	cout << "sorted ";
+	print (list4);
+
+	insertNthEnd(list4, 4, 2);
 	print (list4);
 	// List* list5 = newList();
 	//
