@@ -227,60 +227,6 @@ int loop (List* list) {
 	return q;
 }
 
-// incomplete
-// void MaxSumList (List* list1, List* list2) {
-// 	Node* add1 = list1->head, *add2 = list2->head, *temp1 = list1->head, *temp2 = list2->head, addHead;
-//
-// 	int count1 = 0, count2 = 0, q = 1, listNum = 1;
-//
-// 	Node *add = &addHead;
-// 	addHead.next = NULL;
-//
-// 	while (1) {
-// 		if (add1 == NULL) break;
-// 		if (add2 == NULL) break;
-//
-// 		cout << "add " << add1->val << " "<< add2->val << endl;
-//
-// 		if (add1->val == add2->val) {
-// 			if (q == 0) {
-// 				temp1 = add1;
-// 				temp2 = add2;
-// 				q = 1;
-// 			}
-// 			else {
-// 				if (count1 > count2) {
-// 					while (temp1 != add1) {
-// 						cout << "doing1 \n";
-// 						add->next = temp1;
-// 						add = add->next;
-// 						temp1 = temp1->next;
-// 					}
-// 				}
-// 				else {
-// 					while (temp2 != add2) {
-// 						cout << "doing2 \n";
-// 						add->next = temp2;
-// 						add = add->next;
-// 						temp2 = temp2->next;
-// 					}
-// 				}
-// 				q = 0;
-// 				count1 = 0;
-// 				count2 = 0;
-// 			}
-// 		}
-//
-// 		if (q == 1) {
-// 			count1 += add1->val;
-// 			count2 += add2->val;
-// 		}
-// 		add1 = add1->next;
-// 		add2 = add2->next;
-// 	}
-// 	list1->head = addHead.next;
-// }
-
 Node* MaxSumList (List* list1, List* list2) {
 	Node* add1 = list1->head, *add2 = list2->head, *res = NULL, *temp1 = add1, *temp2 = add2, *prev = NULL;
 	int count1 = 0, count2 = 0;
@@ -513,13 +459,6 @@ void mergeAlternate (Node* add1, Node* add2) {
 	}
 }
 
-Node* mergedAlternate (Node* add1, Node* add2) {
-	Node* add;
-	add = add1;
-	add1 = add->next;
-
-}
-
 void ReverseAlternateKNodes (List* list, int k) {
 	int count = 0;
 	Node* curr = list->head;
@@ -687,6 +626,33 @@ void MergeSortedListRev (List* list1, List* list2) {
 	list1->head = res;
 }
 
+void sort012 (List* list) {
+	Node* temp0 = NULL, *prev0 = NULL, *temp1 = NULL, *prev1 = NULL, *temp2 = NULL, *prev2 = NULL,*add = list->head;
+
+	while (add != NULL) {
+		if (add->val == 0) {
+			if (temp0 == NULL) temp0 = add;
+			else prev0->next = add;
+			prev0 = add;
+		}
+		else if (add->val == 1) {
+			if (temp1 == NULL) temp1 = add;
+			else prev1->next = add;
+			prev1 = add;
+		}
+		else if (add->val == 2) {
+			if (temp2 == NULL) temp2 = add;
+			else prev2->next = add;
+			prev2 = add;
+		}
+		add = add->next;
+	}
+	prev0->next = temp1;
+	prev1->next = temp2;
+	prev2->next = NULL;
+	list->head = temp0;
+}
+
 int main() {
 	// List* list = newList();
 	// cout << findLengthItter(list) << endl;
@@ -761,7 +727,6 @@ int main() {
 	print (list3);
 	Node* y = MaxSumList(list2, list3);
 	cout << "print MaxSumList\n";
-
 	printList (y);
 	// oddEven1(list3->head);
 
@@ -777,17 +742,24 @@ int main() {
 	// mergeAlternate (list2->head, list3->head);
 	// print (list2);
 	//
-	// List* list4 = newList();
-	//
-	// // pushList (list4, 5);
-	// pushList (list4, 9);
-	// pushList (list4, 0);
-	// pushList (list4, 0);
-	// pushList (list4, 0);
-	// pushList (list4, 9);
-	//
-	// print (list4);
-	//
+	List* list4 = newList();
+
+	// pushList (list4, 5);
+	pushList (list4, 1);
+	pushList (list4, 0);
+	pushList (list4, 2);
+	pushList (list4, 0);
+	pushList (list4, 1);
+	pushList (list4, 1);
+	pushList (list4, 0);
+	pushList (list4, 2);
+	pushList (list4, 0);
+	pushList (list4, 1);
+	
+	print (list4);
+	sort012 (list4);
+	cout << "sorted ";
+	print (list4);
 	// List* list5 = newList();
 	//
 	// pushList (list5, 9);
