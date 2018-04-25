@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <map>
 
 using namespace std;
 
@@ -394,7 +395,7 @@ void verticalPrint(Node* add) {
 	minMax(add, &min, &max, 0);
 	for (int i=min; i<=max; i++) {
 		printLevel(add, 0, i);
-		std::cout << '\n';
+		cout << '\n';
 	}
 }
 
@@ -444,7 +445,29 @@ void printNoSiblings (Node* add) {
 		cout << add->left->val << " ";
 		printNoSiblings (add->left);
 	}
+}
 
+void printDiagonalMakeDict (map <int, vector<int> > *dict, Node* add, int s) {
+	if (add != NULL) {
+		(*dict)[s].push_back(add->val);
+	}
+	else return;
+	if (add->left != NULL) printDiagonalMakeDict(dict, add->left, s+1);
+	if (add->right != NULL) printDiagonalMakeDict(dict, add->right, s);
+}
+
+void printDiagonal (Node* add) {
+	map <int, vector<int> > dict;
+	printDiagonalMakeDict(&dict, add, 0);
+	map <int, vector<int> > :: iterator itr;
+	vector<int> :: iterator p;
+
+	for (itr = dict.begin(); itr != dict.end(); ++itr)    {
+        for (p = itr->second.begin(); p != itr->second.end(); ++p) {
+			cout << *p << " ";
+		}
+		cout << "\n";
+    }
 }
 
 int main() {
@@ -515,20 +538,21 @@ int main() {
 
 	cout << "min Leaf dist of 2 is " << minLeafNode(inPre1, 2) << endl;
 	cout << "min Leaf dist of 4 is " << minLeafNode(inPre1, 4) << endl;
-	std::cout << "verticalPrint " << '\n';
+	cout << "verticalPrint " << '\n';
 	verticalPrint(inPre1);
-	std::cout << "printLevelOrder" << '\n';
+	cout << "printLevelOrder" << '\n';
 	printLevelOrder(inPost);
-	std::cout << '\n';
-	std::cout << "printLevelOrder" << '\n';
+	cout << '\n';
+	cout << "printLevelOrder" << '\n';
 	printLevelOrder(inPre1);
-	std::cout << '\n';
-	std::cout << "printLevelOrderQueue" << '\n';
+	cout << '\n';
+	cout << "printLevelOrderQueue" << '\n';
 	printLevelOrderQueue(inPre1);
-	std::cout << '\n';
-
+	cout << '\n';
 	printNoSiblings(inPre1);
-	std::cout << '\n';
+	cout << '\n';
+	cout << "DiagonalPrint\n";
+	printDiagonal (inPre1);
 }
 
 /*
