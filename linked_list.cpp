@@ -460,25 +460,33 @@ void mergeAlternate (Node* add1, Node* add2) {
 }
 
 void ReverseAlternateKNodes (List* list, int k) {
-	int count = 0;
+	int count = 1, flag = 0;
 	Node* curr = list->head;
-	Node* after, *prev;
-	Node* start, *end;
+	Node* after, *prev = NULL;
+	Node* start, *end, *last = curr, *prev_last = NULL;
 
-	while (1) {
-		/* code */
-	}
-	while (count != k) {
-
-		if (count == 0) {
-			// start = add;
+	while (curr != NULL) {
+		if (count == k) {
+			start = curr;
 		}
-
 		after = curr->next;
 		curr->next = prev;
 		prev = curr;
 		curr = after;
+		flag ++;
+		count ++;
+
+		if (flag == k) {
+			if (prev_last != NULL) {
+				last->next = prev;
+				last = prev_last;
+			}
+			prev_last = curr;
+			flag = 0;
+		}
 	}
+	last->next = NULL;
+	printList (start);
 }
 
 void zeroPaddingRem (List* list) {
@@ -672,35 +680,7 @@ void insertNthEnd (List* list, int n, int s) {
 }
 
 int main() {
-	// List* list = newList();
-	// cout << findLengthItter(list) << endl;
-	// cout << findLengthRecursive(list->head, 0) << endl;
-	// pushList (list, 10);
-	// pushList (list, 15);
-	// pushList (list, 25);
-	// pushList (list, 45);
-	// pushList (list, 20);
-	// pushList (list, 35);
-	// pushList (list, 15);
-	// pushList (list, 47);
-	// print (list);
-	// reverse (list);
-	// print (list);
-	// cout << "nth from last " << nthNodeEnd (list, 2) << endl;
-	// swap (&list->head, 47, 15);
-	// print (list);
-	// cout << nthNode (list, 10) << endl;
-	// cout << "middle " << middleNode (list) << endl;
-	// cout << "count " << countFreq (list, 85) << endl;
 
-	// cout << findLengthRecursive(list->head, 0) << endl;
-	// deleteNode (list, 45);
-	// print(list);
-	// cout << "middle " << middleNode (list) << endl;
-
-	// cout << findLengthItter(list) << endl;
-	// deleteLinkedList(list);
-	// print (list);
 	List* list1 = newList();
 	List* list2 = newList();
 
@@ -766,12 +746,13 @@ int main() {
 	pushList (list4, 1);
 	pushList (list4, 0);
 	pushList (list4, 2);
-	pushList (list4, 0);
 	pushList (list4, 1);
 	pushList (list4, 1);
-	pushList (list4, 0);
+	pushList (list4, 1);
+	pushList (list4, 1);
 	pushList (list4, 2);
 	pushList (list4, 0);
+	pushList (list4, 1);
 	pushList (list4, 1);
 
 	print (list4);
@@ -781,18 +762,8 @@ int main() {
 
 	insertNthEnd(list4, 4, 2);
 	print (list4);
-	// List* list5 = newList();
-	//
-	// pushList (list5, 9);
-	// pushList (list5, 9);
-	// pushList (list5, 9);
-	// pushList (list5, 9);
-	//
-	// print (list5);
-	//
-	// // Node* t = sumLinked1 (list4, list5);
-	// // printList (t);
-	//
-	// sumLinked (list5, list4);
-	// print (list5);
+
+	print (list3);
+	ReverseAlternateKNodes (list3, 3);
+
 }

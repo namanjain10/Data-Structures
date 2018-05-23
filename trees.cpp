@@ -470,6 +470,37 @@ void printDiagonal (Node* add) {
     }
 }
 
+void printCornerNodesUtil (Node* add, int level, int* max_level) {
+	if (add == NULL) return;
+
+	if (*max_level < level) {
+        cout << add->val << " ";
+        *max_level = level;
+    }
+	printCornerNodesUtil(add->left, level+1, max_level);
+	printCornerNodesUtil(add->right, level+1, max_level);
+}
+
+void printCornerNodes (Node* add) {
+	int max_level = 0;
+	printCornerNodesUtil(add, 1, &max_level);
+}
+
+void printLevelOrder1 (Node* add) {
+	queue <pair<int, Node*> > arr;
+	int level = 1;
+	arr.push(make_pair(level, add));
+
+	while (!arr.empty()) {
+		Node* x = arr.front().second;
+		int y = arr.front().first;
+		arr.pop();
+		if (x->left != NULL) arr.push(make_pair(y+1, x->left));
+		if (x->right != NULL) arr.push(make_pair(y+1, x->right));
+		cout << x->val << " " << " level " << y << "\n";
+	}
+}
+
 int main() {
 	Tree* p = newTree();
 	insert (p, 30);
@@ -535,6 +566,8 @@ int main() {
 	Node* inPre1 = constTreeInPre (in1, pre1, 0, 9);
 	printPre(inPre1);
 	cout << '\n';
+	printPre(inPre1);
+	cout << '\n';
 
 	cout << "min Leaf dist of 2 is " << minLeafNode(inPre1, 2) << endl;
 	cout << "min Leaf dist of 4 is " << minLeafNode(inPre1, 4) << endl;
@@ -553,6 +586,9 @@ int main() {
 	cout << '\n';
 	cout << "DiagonalPrint\n";
 	printDiagonal (inPre1);
+	printCornerNodes (inPre1);
+	cout << "Level Order\n";
+	printLevelOrder1 (inPre1);
 }
 
 /*
