@@ -103,29 +103,37 @@
 
 // numbers to words (not accurate but will do)
 
+// #include <iostream>
+// using namespace std;
+//
+// int main() {
+//     string units[] = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+//     string tens[] = {"twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"};
+//     string one[] = {"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
+//     string higher[] = {"hundred", "thousand"};
+//
+//     int number, digit = 0, arr[100];
+//     cin >> number;
+//
+//     while (number != 0) {
+//         arr[digit++] = number%10;
+//         number = number/10;
+//     }
+//
+//     for (int i=0; i<digit; i++) {
+//         if (i == 1) {
+//             if (arr[i] == 1) cout << one[arr[0]] << " ";
+//             else if (arr[i] != 0) cout  << tens[arr[i]-2] << " ";
+//         }
+//         if (i == 0 && arr[i] != 0 && arr[i+1] != 1) cout << units[arr[i]-1] << " ";
+//         if (i > 1 && arr[i] != 0) cout << units[arr[i]-1] << " " << higher[i-2] << " " ;
+//     }
+// }
+
 #include <iostream>
 using namespace std;
+int main () {
+    
+    cout << "hello world!!\n";
 
-int main() {
-    string units[] = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-    string tens[] = {"twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"};
-    string one[] = {"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
-    string higher[] = {"hundred", "thousand"};
-
-    int number, digit = 0, arr[100];
-    cin >> number;
-
-    while (number != 0) {
-        arr[digit++] = number%10;
-        number = number/10;
-    }
-
-    for (int i=0; i<digit; i++) {
-        if (i == 1) {
-            if (arr[i] == 1) cout << one[arr[0]] << " ";
-            else if (arr[i] != 0) cout  << tens[arr[i]-2] << " ";
-        }
-        if (i == 0 && arr[i] != 0 && arr[i+1] != 1) cout << units[arr[i]-1] << " ";
-        if (i > 1 && arr[i] != 0) cout << units[arr[i]-1] << " " << higher[i-2] << " " ;
-    }
 }

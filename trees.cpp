@@ -486,10 +486,12 @@ void printCornerNodes (Node* add) {
 	printCornerNodesUtil(add, 1, &max_level);
 }
 
+// incomplete print leftmost and rightmost node at each level
 void printLevelOrder1 (Node* add) {
 	queue <pair<int, Node*> > arr;
-	int level = 1;
-	arr.push(make_pair(level, add));
+	int level = 0;
+	arr.push(make_pair(level+1, add));
+	Node* prev = NULL;
 
 	while (!arr.empty()) {
 		Node* x = arr.front().second;
@@ -497,7 +499,12 @@ void printLevelOrder1 (Node* add) {
 		arr.pop();
 		if (x->left != NULL) arr.push(make_pair(y+1, x->left));
 		if (x->right != NULL) arr.push(make_pair(y+1, x->right));
-		cout << x->val << " " << " level " << y << "\n";
+		if (y != level) {
+			if (prev != NULL && x != prev) cout << prev->val << " " << " level " << level << "\n";
+			cout << x->val << " " << " level " << y << "\n";
+			level = y;
+		}
+		prev = x;
 	}
 }
 

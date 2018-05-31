@@ -12,7 +12,7 @@ void removeSpaces (char* a) {
 
 int main() {
     char a[] = "naman jain hai naam mera";
-    
+
     removeSpaces(a);
     cout << a << endl;
     return 0;
