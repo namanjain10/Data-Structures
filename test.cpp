@@ -131,9 +131,35 @@
 // }
 
 #include <iostream>
+#include <stack>
+#include <map>
+
 using namespace std;
+
+int balancedParentheses (string s) {
+    stack <char> arr;
+    map <char,char> valid;
+
+    valid.insert(pair <char, char> ('}','{'));
+    valid.insert(pair <char, char> (')','('));
+    valid.insert(pair <char, char> (']','['));
+    
+    for (int i=0; i<s.length(); i++) {
+        if (arr.empty()) arr.push(s[i]);
+        else {
+            if (arr.top() == valid.find(s[i])->second) {
+                arr.pop();
+            }
+            else arr.push(s[i]);
+        }
+    }
+    if (arr.empty()) return 1;
+    else return 0;
+} 
+
 int main () {
     
-    cout << "hello world!!\n";
-
+    string s = "[()]{}{[()(])()}";
+    int q = balancedParentheses(s);
+    cout << q << '\n';
 }
