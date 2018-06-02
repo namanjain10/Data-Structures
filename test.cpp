@@ -168,59 +168,111 @@
 
 // implement queue from stack (using 2 stacks)
 
+// #include <iostream>
+// #include <stack>
+
+// using namespace std;
+
+// class queue {
+    
+//     stack <int> s1, s2;
+//     int size;
+    
+//     void adjust () {
+//         while (!s1.empty()) {
+//             s2.push (s1.top());
+//             s1.pop();
+//         }
+//     }
+
+//     public:
+
+//     queue () {
+//         size = 0;
+//     }
+//     void push (int x) {
+//         s1.push(x);
+//         size++;
+//     }    
+//     void pop () {
+//         if (size > 0) {
+//             adjust();
+//             s2.pop();
+//             size--;
+//         }
+//     }
+//     int top () {
+//         if (size > 0) {
+//             adjust();
+//             return s2.top();
+//         }
+//     }    
+//     bool empty () {
+//         return (size == 0 ? 1:0);
+//     }
+// };
+
+// int main() {
+//     queue q1;
+//     q1.push(2);
+//     q1.push(1);
+//     q1.push(3);
+//     q1.push(4);
+//     cout << q1.top() << endl;
+//     q1.pop();
+//     q1.pop();q1.pop();
+//     cout << q1.top() << endl;
+//     cout << q1.empty() << endl;
+// }
+
+// Implement stack using queue
+
 #include <iostream>
-#include <stack>
+#include <queue>
 
 using namespace std;
 
-class queue {
-    
-    stack <int> s1, s2;
+class stack {
+    queue <int> q1, q2;
     int size;
-    
-    void adjust () {
-        while (!s1.empty()) {
-            s2.push (s1.top());
-            s1.pop();
-        }
-    }
 
     public:
 
-    queue () {
+    stack () {
         size = 0;
     }
     void push (int x) {
-        s1.push(x);
-        size++;
-    }    
-    void pop () {
-        if (size > 0) {
-            adjust();
-            s2.pop();
-            size--;
+        size++ ;
+        q2.push(x);
+        while (!q1.empty()) {
+            q2.push(q1.front());
+            q1.pop();
         }
+        queue <int> q = q1;
+        q1 = q2;
+        q2 = q;
+    }
+    void pop () {
+        q1.pop();
+        size--;
     }
     int top () {
-        if (size > 0) {
-            adjust();
-            return s2.top();
-        }
-    }    
+        return q1.front();
+    }
     bool empty () {
         return (size == 0 ? 1:0);
     }
 };
 
-int main() {
-    queue q1;
-    q1.push(2);
-    q1.push(1);
-    q1.push(3);
-    q1.push(4);
-    cout << q1.top() << endl;
-    q1.pop();
-    q1.pop();q1.pop();
-    cout << q1.top() << endl;
-    cout << q1.empty() << endl;
+int main () {
+    stack s;
+    s.push(1);
+    s.push(2);
+    s.push(3);
+    s.push(4);
+    cout << s.top() << endl;    
+    s.pop();s.pop();s.pop();
+    cout << s.top() << endl;
+    s.pop();
+    cout << s.empty() << endl;
 }
