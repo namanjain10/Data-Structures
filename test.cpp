@@ -130,36 +130,97 @@
 //     }
 // }
 
+// parenthesis check
+
+// #include <iostream>
+// #include <stack>
+// #include <map>
+
+// using namespace std;
+
+// int balancedParentheses (string s) {
+//     stack <char> arr;
+//     map <char,char> valid;
+
+//     valid.insert(pair <char, char> ('}','{'));
+//     valid.insert(pair <char, char> (')','('));
+//     valid.insert(pair <char, char> (']','['));
+    
+//     for (int i=0; i<s.length(); i++) {
+//         if (arr.empty()) arr.push(s[i]);
+//         else {
+//             if (arr.top() == valid.find(s[i])->second) {
+//                 arr.pop();
+//             }
+//             else arr.push(s[i]);
+//         }
+//     }
+//     if (arr.empty()) return 1;
+//     else return 0;
+// } 
+
+// int main () {
+    
+//     string s = "[()]{}{[()(])()}";
+//     int q = balancedParentheses(s);
+//     cout << q << '\n';
+// }
+
+// implement queue from stack (using 2 stacks)
+
 #include <iostream>
 #include <stack>
-#include <map>
 
 using namespace std;
 
-int balancedParentheses (string s) {
-    stack <char> arr;
-    map <char,char> valid;
-
-    valid.insert(pair <char, char> ('}','{'));
-    valid.insert(pair <char, char> (')','('));
-    valid.insert(pair <char, char> (']','['));
+class queue {
     
-    for (int i=0; i<s.length(); i++) {
-        if (arr.empty()) arr.push(s[i]);
-        else {
-            if (arr.top() == valid.find(s[i])->second) {
-                arr.pop();
-            }
-            else arr.push(s[i]);
+    stack <int> s1, s2;
+    int size;
+    
+    void adjust () {
+        while (!s1.empty()) {
+            s2.push (s1.top());
+            s1.pop();
         }
     }
-    if (arr.empty()) return 1;
-    else return 0;
-} 
 
-int main () {
-    
-    string s = "[()]{}{[()(])()}";
-    int q = balancedParentheses(s);
-    cout << q << '\n';
+    public:
+
+    queue () {
+        size = 0;
+    }
+    void push (int x) {
+        s1.push(x);
+        size++;
+    }    
+    void pop () {
+        if (size > 0) {
+            adjust();
+            s2.pop();
+            size--;
+        }
+    }
+    int top () {
+        if (size > 0) {
+            adjust();
+            return s2.top();
+        }
+    }    
+    bool empty () {
+        return (size == 0 ? 1:0);
+    }
+};
+
+int main() {
+    queue q1;
+    q1.push(2);
+    q1.push(1);
+    q1.push(3);
+    q1.push(4);
+    cout << q1.top() << endl;
+    q1.pop();
+    q1.pop();q1.pop();
+    cout << q1.top() << endl;
+    cout << q1.empty() << endl;
 }
