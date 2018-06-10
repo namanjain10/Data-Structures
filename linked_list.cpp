@@ -679,6 +679,28 @@ void insertNthEnd (List* list, int n, int s) {
 	temp1->next->next = temp;
 }
 
+void pairwiseSwap (List* list) {
+	Node* add = list->head;
+	Node* prev = add;
+	int y = 0;
+
+	while (add->next != NULL) {
+
+		swapNum (add, add->next);
+		
+		if (y == 0) {
+			list->head = add;
+			y = 1;
+			prev = add->next;
+		}
+		else {
+			prev->next = add;
+			prev = add->next;
+		}	
+		add = add->next->next;
+	}
+}
+
 int main() {
 
 	List* list1 = newList();
@@ -726,6 +748,7 @@ int main() {
 	Node* y = MaxSumList(list2, list3);
 	cout << "print MaxSumList\n";
 	printList (y);
+	
 	// oddEven1(list3->head);
 
 	// MergeSortedListRev(list2, list3);
@@ -765,5 +788,8 @@ int main() {
 
 	print (list3);
 	ReverseAlternateKNodes (list3, 3);
-
+	cout << "list3 \n";
+	print (list3);
+	pairwiseSwap (list3);
+	print (list3);
 }
