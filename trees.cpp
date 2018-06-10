@@ -508,94 +508,137 @@ void printLevelOrder1 (Node* add) {
 	}
 }
 
+
+Node* newNode (int data) {
+    Node* node = new Node;
+    node->val  = data;
+    node->left  = node->right = NULL;
+    return (node);
+}
+
+Node* lca (Node* root, int a, int b) {
+
+	Node* add = root;
+
+	int min = (a < b)? a:b;
+	int max = (a >= b)? a:b;
+
+	cout << min << " " << max << endl;
+
+	while (add != NULL) {
+		if (add->val > max && add->val > min) add = add->left;
+		else if (add->val < max && add->val < min) add = add->right;
+		else break;
+	} 
+	return add;
+}
+
 int main() {
-	Tree* p = newTree();
-	insert (p, 30);
-	insert (p, 20);
-	insert (p, 10);
-	insert (p, 5);
-	insert (p, 25);
-	insert (p, 40);
-	printIn (p->root);
-	cout << "\n";
-	cout << "count " << countNodes(p->root) << endl;
-	cout << "height " << height(p->root) << endl;
+	// Tree* p = newTree();
+	// insert (p, 30);
+	// insert (p, 20);
+	// insert (p, 10);
+	// insert (p, 5);
+	// insert (p, 25);
+	// insert (p, 40);
+	// printIn (p->root);
+	// cout << "\n";
+	// cout << "count " << countNodes(p->root) << endl;
+	// cout << "height " << height(p->root) << endl;
 
-	if(sum(p->root, 0, 60))
-		cout << "There is a root-to-leaf path with sum " << 60 << endl;
-	else
-		cout << "There is no root-to-leaf path with sum " << 60 << endl;
+	// if(sum(p->root, 0, 60))
+	// 	cout << "There is a root-to-leaf path with sum " << 60 << endl;
+	// else
+	// 	cout << "There is no root-to-leaf path with sum " << 60 << endl;
 
-	if(sum(p->root, 0, 65))
-		cout << "There is a root-to-leaf path with sum " << 65 << endl;
-	else
-		cout << "There is no root-to-leaf path with sum " << 65 << endl;
+	// if(sum(p->root, 0, 65))
+	// 	cout << "There is a root-to-leaf path with sum " << 65 << endl;
+	// else
+	// 	cout << "There is no root-to-leaf path with sum " << 65 << endl;
 
-	cout << "balanced " << balanced(p->root) << endl;
-	cout << "diameter " << diameter(p->root) << endl;
-	cout << "children sum " << childrenSumProperty(p->root) << endl;
-	cout << "count leaf " << countLeafNodes(p->root, 0) << endl;
-	//printRootLeafPaths (p->root);
-	printAncestors (p->root, 10);
+	// cout << "balanced " << balanced(p->root) << endl;
+	// cout << "diameter " << diameter(p->root) << endl;
+	// cout << "children sum " << childrenSumProperty(p->root) << endl;
+	// cout << "count leaf " << countLeafNodes(p->root, 0) << endl;
+	// //printRootLeafPaths (p->root);
+	// printAncestors (p->root, 10);
 
-	int pre[] = {1,2,4,5,6,3,7,8};
-	int in[] = {5,4,6,2,1,3,8,7};
-	int post[] = {5,6,4,2,8,7,3,1};
+	// int pre[] = {1,2,4,5,6,3,7,8};
+	// int in[] = {5,4,6,2,1,3,8,7};
+	// int post[] = {5,6,4,2,8,7,3,1};
 
-	Node* add = constTreeInPre (in, pre, 0, 7);
-	cout << "PreIn\n";
-	printIn(add);
-	cout << "\n";
-	printPre(add);
-	cout << "\n";
-	printPost(add);
-	cout << "\n";
+	// Node* add = constTreeInPre (in, pre, 0, 7);
+	// cout << "PreIn\n";
+	// printIn(add);
+	// cout << "\n";
+	// printPre(add);
+	// cout << "\n";
+	// printPost(add);
+	// cout << "\n";
 
-	Node* inPost = constTreeInPost (in, post, 0, 7, 0, 7);
-	cout << "postIn \n";
-	printIn(inPost);
-	cout << "\n";
-	printPre(inPost);
-	cout << "\n";
-	printPost(inPost);
-	cout << "\n";
+	// Node* inPost = constTreeInPost (in, post, 0, 7, 0, 7);
+	// cout << "postIn \n";
+	// printIn(inPost);
+	// cout << "\n";
+	// printPre(inPost);
+	// cout << "\n";
+	// printPost(inPost);
+	// cout << "\n";
 
-	cout << "Left leaf sum " << sumLeftLeaf(inPost, 0) << endl;
-	cout << "all leaf sum " << sumLeaf(inPost, 0) << endl;
-	cout << "max element " << maxElement(inPost, -1000000) << endl;
-	cout << "min Leaf dist of 2 is " << minLeafNode(inPost, 2) << endl;
-	cout << "min Leaf dist of 4 is " << minLeafNode(inPost, 4) << endl;
-	cout << "min Leaf dist of 1 is " << minLeafNode(inPost, 1) << endl;
+	// cout << "Left leaf sum " << sumLeftLeaf(inPost, 0) << endl;
+	// cout << "all leaf sum " << sumLeaf(inPost, 0) << endl;
+	// cout << "max element " << maxElement(inPost, -1000000) << endl;
+	// cout << "min Leaf dist of 2 is " << minLeafNode(inPost, 2) << endl;
+	// cout << "min Leaf dist of 4 is " << minLeafNode(inPost, 4) << endl;
+	// cout << "min Leaf dist of 1 is " << minLeafNode(inPost, 1) << endl;
 
-	int pre1[] = {1,2,3,4,5,6,7,8,9,10};
-	int in1[] = {3,2,7,6,8,5,4,1,10,9};
+	// int pre1[] = {1,2,3,4,5,6,7,8,9,10};
+	// int in1[] = {3,2,7,6,8,5,4,1,10,9};
 
-	Node* inPre1 = constTreeInPre (in1, pre1, 0, 9);
-	printPre(inPre1);
-	cout << '\n';
-	printPre(inPre1);
-	cout << '\n';
+	// Node* inPre1 = constTreeInPre (in1, pre1, 0, 9);
+	// printPre(inPre1);
+	// cout << '\n';
+	// printPre(inPre1);
+	// cout << '\n';
 
-	cout << "min Leaf dist of 2 is " << minLeafNode(inPre1, 2) << endl;
-	cout << "min Leaf dist of 4 is " << minLeafNode(inPre1, 4) << endl;
-	cout << "verticalPrint " << '\n';
-	verticalPrint(inPre1);
-	cout << "printLevelOrder" << '\n';
-	printLevelOrder(inPost);
-	cout << '\n';
-	cout << "printLevelOrder" << '\n';
-	printLevelOrder(inPre1);
-	cout << '\n';
-	cout << "printLevelOrderQueue" << '\n';
-	printLevelOrderQueue(inPre1);
-	cout << '\n';
-	printNoSiblings(inPre1);
-	cout << '\n';
-	cout << "DiagonalPrint\n";
-	printDiagonal (inPre1);
-	printCornerNodes (inPre1);
-	cout << "Level Order\n";
-	printLevelOrder1 (inPre1);
+	// cout << "min Leaf dist of 2 is " << minLeafNode(inPre1, 2) << endl;
+	// cout << "min Leaf dist of 4 is " << minLeafNode(inPre1, 4) << endl;
+	// cout << "verticalPrint " << '\n';
+	// verticalPrint(inPre1);
+	// cout << "printLevelOrder" << '\n';
+	// printLevelOrder(inPost);
+	// cout << '\n';
+	// cout << "printLevelOrder" << '\n';
+	// printLevelOrder(inPre1);
+	// cout << '\n';
+	// cout << "printLevelOrderQueue" << '\n';
+	// printLevelOrderQueue(inPre1);
+	// cout << '\n';
+	// printNoSiblings(inPre1);
+	// cout << '\n';
+	// cout << "DiagonalPrint\n";
+	// printDiagonal (inPre1);
+	// printCornerNodes (inPre1);
+	// cout << "Level Order\n";
+	// printLevelOrder1 (inPre1);
+
+	struct Node *root        = newNode(20);
+    root->left               = newNode(8);
+    root->right              = newNode(22);
+    root->left->left         = newNode(4);
+    root->left->right        = newNode(12);
+    root->left->right->left  = newNode(10);
+    root->left->right->right = newNode(14);
+
+	printLevelOrder (root);
+	cout << endl;
+
+	Node* add = lca (root, 10, 14);
+	cout << add->val << endl;
+	add = lca (root, 8, 14);
+	cout << add->val << endl;
+	add = lca (root, 10, 22);
+	cout << add->val << endl;
 }
 
 /*
