@@ -227,52 +227,135 @@
 
 // Implement stack using queue
 
-#include <iostream>
-#include <queue>
+// #include <iostream>
+// #include <queue>
 
+// using namespace std;
+
+// class stack {
+//     queue <int> q1, q2;
+//     int size;
+
+//     public:
+
+//     stack () {
+//         size = 0;
+//     }
+//     void push (int x) {
+//         size++ ;
+//         q2.push(x);
+//         while (!q1.empty()) {
+//             q2.push(q1.front());
+//             q1.pop();
+//         }
+//         queue <int> q = q1;
+//         q1 = q2;
+//         q2 = q;
+//     }
+//     void pop () {
+//         if (size > 0) {
+//             q1.pop();
+//             size--;
+//         }
+//     }
+//     int top () {
+//         if (size > 0) {
+//             return q1.front();
+//         }
+//     }
+//     bool empty () {
+//         return (size == 0 ? 1:0);
+//     }
+// };
+
+// int main () {
+//     stack s;
+//     s.push(1);
+//     s.push(2);
+//     s.push(3);
+//     s.push(4);
+//     cout << s.top() << endl;    
+//     s.pop();s.pop();s.pop();
+//     cout << s.top() << endl;
+//     s.pop();
+//     cout << s.empty() << endl;
+// }
+
+// Engineer Doctor Problem
+// Everybody has two children.
+// First child of an Engineer is an Engineer and second child is a Doctor.
+// First child of an Doctor is Doctor and second child is an Engineer.
+// All generations of Doctors and Engineers start with Engineer.
+
+// #include <iostream> 
+// using namespace std;
+// int main () {
+    
+
+// } 
+
+
+// Find the minimum element in Sorted and Rotated array
+
+// #include <iostream>
+// using namespace std;
+
+// int minElement (int *arr, int start, int end) {
+
+//     if (start - end == 0) return arr[start] ;
+
+//     int m = (start + end)/2;
+//     int mid = arr[m];
+
+//     if (m-1 > start) {
+//         if (m+1 < end) {
+//             if (mid < arr[m-1]) {
+//                 if (mid < arr[m+1]) {
+//                     return mid;
+//                 }
+//             }
+//             else if (mid < arr[m-1] && mid > arr[m+1]) {
+//                 return minElement (arr, mid, end);
+//             }
+//             else if (mid > arr[m-1] && mid < arr[m+1]) {
+//                 return minElement (arr, start, mid);
+//             }
+//         }
+
+//         else {
+
+//         }        
+//     }
+    
+// }
+
+// int main () {
+//     int arr[] = {5,2,3,4};
+//     int n = sizeof(arr)/ sizeof(int);
+
+//     cout << minElement(arr, 0, n) << endl;
+// }
+
+
+// Find if two rectangles overlap
+
+#include <iostream>
 using namespace std;
 
-class stack {
-    queue <int> q1, q2;
-    int size;
-
-    public:
-
-    stack () {
-        size = 0;
-    }
-    void push (int x) {
-        size++ ;
-        q2.push(x);
-        while (!q1.empty()) {
-            q2.push(q1.front());
-            q1.pop();
-        }
-        queue <int> q = q1;
-        q1 = q2;
-        q2 = q;
-    }
-    void pop () {
-        q1.pop();
-        size--;
-    }
-    int top () {
-        return q1.front();
-    }
-    bool empty () {
-        return (size == 0 ? 1:0);
-    }
+struct Point {
+    int x, y;
 };
 
+bool doOverlap (Point l1, Point r1, Point l2, Point r2) {
+    if (l1.x > r2.x || l2.x > r1.x) return false;
+    else if (l1.y < r2.y || l2.y < r1.y) return false;
+    return true;
+}
+
 int main () {
-    stack s;
-    s.push(1);
-    s.push(2);
-    s.push(3);
-    s.push(4);
-    cout << s.top() << endl;    
-    s.pop();s.pop();s.pop();
-    cout << s.top() << endl;
-    s.pop();
-    cout << s.empty() << endl;
+
+    Point l1 = {0, 10}, r1 = {10, 0};
+    Point l2 = {5, 5}, r2 = {15, 0};
+    if (doOverlap(l1, r1, l2, r2)) cout << "Rectangles Overlap\n" ;
+    else cout << "Rectangles Don't Overlap\n";
 }
