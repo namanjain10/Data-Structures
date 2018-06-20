@@ -363,63 +363,179 @@
 
 // kth smallest element of 2-d matrix
 
+// #include <iostream> 
+// #include <queue>
+// using namespace std;
+
+// struct Point {
+//     int val, i, j;
+// };
+
+// class myComparator {
+// public:
+//     int operator() (const Point& p1, const Point& p2) {
+//         return p1.val > p2.val;
+//     }
+// };
+
+// int kthSmallestNumber (int ** arr , int k, int n) {
+
+//     int x = 0, y = 0;
+//     priority_queue <Point, vector<Point>, myComparator > p;
+
+//     int ** check = new int*[n];
+
+//     for (int i=0; i<n; i++) {
+//         check[i] = new int[n];
+//         for (int j=0; j<n; j++) {
+//             check[i][j] = 0;
+//         }
+//     }
+
+//     Point a;
+//     a.val = arr[x][y], a.i = 0, a.j = 0;
+//     p.push(a);
+
+//     while (k-- && !p.empty()) {
+//         x = p.top().i;
+//         y = p.top().j;  
+        
+//         p.pop();
+
+//         if (x+1 <= n-1 && check[x+1][y] == 0 ) {
+//             a.val = arr[x+1][y], a.i = x+1, a.j = y;
+//             p.push(a);
+//             check[x+1][y] = 1;
+//         }
+//         if (y+1 <= n-1 && check[x][y+1] == 0) {
+//             a.val = arr[x][y+1], a.i = x, a.j = y+1;
+//             p.push(a);
+//             check[x][y+1] = 1;
+//         }
+//     }
+//     return p.top().val;
+// }
+
+// int main () {
+//     int n = 4;
+
+//     int ** arr = new int*[n];
+
+//     for (int i=0; i<n; i++) {
+//         arr[i] = new int[n];
+//         for (int j=0; j<n; j++) {
+//             cin >> arr[i][j];
+//         }
+//     }
+//     cout << kthSmallestNumber (arr, 5, n) << endl;
+// } 
+
+// 10 20 30 40
+// 15 25 35 45
+// 27 29 37 48
+// 32 33 39 50
+
+
+// incomplete 
+
+// #include <iostream>
+// #include <map>
+// using namespace std;
+
+// struct Node {
+//     string val;
+//     Node* next;
+// };
+
+// int main() {
+    
+//     map <string, Node*> dict;
+//     int n;
+//     Node* head;
+
+//     cin >> n;
+
+//     while (n--) {
+
+//         string a, b;    
+//         Node* temp, *add;
+
+//         cin >> a >> b;
+
+//         if (dict.count (a) > 0) {
+//             temp = dict.find(a)->second;
+
+//             add = new Node;
+//             add->val = b;
+//             add->next = NULL;
+            
+//             dict.insert(pair <string, Node*> (add->val, add));
+//             temp->next = add;
+//         }
+
+//         else {
+//             add = new Node;
+//             add->val = a;
+//             add->next = NULL;
+
+//             dict.insert(pair <string, Node*> (add->val, add));
+
+//             if (dict.count (b) > 0) {
+//                 temp = dict.find(b)->second;
+
+//             }
+//             else {
+//                 temp = new Node;
+//                 temp->val = b;
+//                 temp->next = add;
+
+//                 dict.insert(pair <string, Node*> (temp->val, temp));
+//             }
+//         }
+
+//     }
+
+//     while (head != NULL) {
+//         cout << head->val << " -> " ;
+//         head = head->next;
+//     }
+
+// }
+
 #include <iostream> 
-#include <queue>
 using namespace std;
 
-struct Point {
-    int val, i, j;
-};
+int maxPathUtil (int ** arr, int n, int i, int j, int cost, int** dp) {
 
-class myComparator {
-public:
-    int operator() (const Point& p1, const Point& p2) {
-        return p1.val > p2.val;
-    }
-};
+    if (i >= n || j>= n) return cost;
 
-int kthSmallestNumber (int ** arr , int k, int n) {
+    if (dp[i][j] != -1) return dp[i][j];
 
-    int x = 0, y = 0;
-    priority_queue <Point, vector<Point>, myComparator > p;
+    int x = maxPathUtil(arr, n, i+1, j, cost + arr[i][j], dp);
+    int y = maxPathUtil(arr, n, i, j+1, cost + arr[i][j], dp);
 
-    int ** check = new int*[n];
-
-    for (int i=0; i<n; i++) {
-        check[i] = new int[n];
-        for (int j=0; j<n; j++) {
-            check[i][j] = 0;
-        }
-    }
-
-    Point a;
-    a.val = arr[x][y], a.i = 0, a.j = 0;
-    p.push(a);
-
-    while (k-- && !p.empty()) {
-        x = p.top().i;
-        y = p.top().j;  
-        
-        p.pop();
-
-        if (x+1 <= n-1 && check[x+1][y] == 0 ) {
-            a.val = arr[x+1][y], a.i = x+1, a.j = y;
-            p.push(a);
-            check[x+1][y] = 1;
-        }
-        if (y+1 <= n-1 && check[x][y+1] == 0) {
-            a.val = arr[x][y+1], a.i = x, a.j = y+1;
-            p.push(a);
-            check[x][y+1] = 1;
-        }
-    }
-    return p.top().val;
+    dp[i][j] = (x>y) ? x:y ; 
+    return dp[i][j];
 }
 
-int main () {
-    int n = 4;
+int maxPath (int ** arr, int n) {
 
-    int ** arr = new int*[n];
+    int ** dp = new int*[n];
+
+    for (int i=0; i<n; i++) {
+        dp[i] = new int[n];
+        for (int j=0; j<n; j++) {
+            dp[i][j] = -1;
+        }
+    }
+    return maxPathUtil(arr, n, 0, 0, 0, dp);
+}
+
+int main () {   
+
+    int n = 6;
+
+    int ** arr = new int*[n];        
 
     for (int i=0; i<n; i++) {
         arr[i] = new int[n];
@@ -427,10 +543,6 @@ int main () {
             cin >> arr[i][j];
         }
     }
-    cout << kthSmallestNumber (arr, 5, n) << endl;
-} 
 
-// 10 20 30 40
-// 15 25 35 45
-// 27 29 37 48
-// 32 33 39 50
+    cout << maxPath (arr, n)/n << endl;
+} 
