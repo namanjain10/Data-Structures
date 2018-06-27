@@ -347,7 +347,7 @@
 // };
 
 // bool doOverlap (Point l1, Point r1, Point l2, Point r2) {
-//     if (l1.x > r2.x || l2.x > r1.x) return false;
+//     if (l1.x > r2.x || l2.x` x > r1.x) return false;
 //     else if (l1.y < r2.y || l2.y < r1.y) return false;
 //     return true;
 // }
@@ -502,47 +502,196 @@
 
 // }
 
-#include <iostream> 
+
+// maximum average path 2-d array
+
+// #include <iostream> 
+// using namespace std;
+
+// int maxPathUtil (int ** arr, int n, int i, int j, int cost, int** dp) {
+
+//     if (i >= n || j>= n) return cost;
+
+//     if (dp[i][j] != -1) return dp[i][j];
+
+//     int x = maxPathUtil(arr, n, i+1, j, cost + arr[i][j], dp);
+//     int y = maxPathUtil(arr, n, i, j+1, cost + arr[i][j], dp);
+
+//     dp[i][j] = (x>y) ? x:y ; 
+//     return dp[i][j];
+// }
+
+// int maxPath (int ** arr, int n) {
+
+//     int ** dp = new int*[n];
+
+//     for (int i=0; i<n; i++) {
+//         dp[i] = new int[n];
+//         for (int j=0; j<n; j++) {
+//             dp[i][j] = -1;
+//         }
+//     }
+//     return maxPathUtil(arr, n, 0, 0, 0, dp);
+// }
+
+// int main () {   
+
+//     int n = 6;
+
+//     int ** arr = new int*[n];        
+
+//     for (int i=0; i<n; i++) {
+//         arr[i] = new int[n];
+//         for (int j=0; j<n; j++) {
+//             cin >> arr[i][j];
+//         }
+//     }
+
+//     cout << maxPath (arr, n)/n << endl;
+// } 
+
+
+// incomplete
+// collect all coins in min number of steps
+
+// #include <iostream>
+// using namespace std;
+
+// int minSteps (int * arr, int start, int end) {
+
+//     int min = INT16_MAX, temp;
+//     for (int i=start; i<end; i++) {
+//         if (arr[i] < min) min = arr[i];
+//     }
+    
+// }
+
+// int main () {
+//     int n;
+//     cin >> n;
+
+//     int *arr = new int[n];
+
+//     for (int i=0; i<n; i++) {
+//         cin >> arr[i];
+//     }    
+
+//     cout << minSteps (arr, 0, n-1) << endl; 
+
+// }
+
+
+// incomplete
+
+// next number from a given string of numbers
+
+// #include <iostream>
+// #include <string.h>
+
+// using namespace std;
+
+// int desc (string number, int k) {
+//     int greatest = number[k], greatestPos = k;
+
+//     for (int i=k+1; i<number.length(); i++) {
+//         if (number[i] > greatest) {
+//             greatest = number[i] ;
+//             greatestPos = i; 
+//         }
+//     }
+//     return greatestPos;
+// }
+
+// string asc (string number, int x, int y) {
+//     string num;
+//     for (int i=x; i<number.length(); i++) {
+//         if (i == y) i++;
+//         num += number[i]; 
+//     }
+//     return num;
+// }
+
+// int main () {
+//     string number, str1;  
+//     cin >> number;
+
+//     for (int i=number.length()-2; i>=0; i--) {
+//         // cout << number[i] << " ";
+//         int k = desc(number, i);
+
+//         if (k != i) {
+//             str1 = number.substr(0, i) ;
+//             str1 += number[k];
+//             str1 += asc(number, i, k);
+//             break;
+//         }
+//         // else cout << "\n";
+//     }
+//     cout << str1 << '\n'; 
+// }
+
+ 
+// find the element in the sorted array not appaering twice
+
+#include <iostream>
 using namespace std;
 
-int maxPathUtil (int ** arr, int n, int i, int j, int cost, int** dp) {
+int binarySearch (int * arr, int start, int end, int k) {
 
-    if (i >= n || j>= n) return cost;
+    if (end - start <= 0) return start;
 
-    if (dp[i][j] != -1) return dp[i][j];
+    int mid = (start + end)/2; 
 
-    int x = maxPathUtil(arr, n, i+1, j, cost + arr[i][j], dp);
-    int y = maxPathUtil(arr, n, i, j+1, cost + arr[i][j], dp);
-
-    dp[i][j] = (x>y) ? x:y ; 
-    return dp[i][j];
-}
-
-int maxPath (int ** arr, int n) {
-
-    int ** dp = new int*[n];
-
-    for (int i=0; i<n; i++) {
-        dp[i] = new int[n];
-        for (int j=0; j<n; j++) {
-            dp[i][j] = -1;
-        }
-    }
-    return maxPathUtil(arr, n, 0, 0, 0, dp);
-}
-
-int main () {   
-
-    int n = 6;
-
-    int ** arr = new int*[n];        
-
-    for (int i=0; i<n; i++) {
-        arr[i] = new int[n];
-        for (int j=0; j<n; j++) {
-            cin >> arr[i][j];
-        }
-    }
-
-    cout << maxPath (arr, n)/n << endl;
+    if (arr[mid] < k) return binarySearch (arr, mid+1, end, k);
+    else return binarySearch (arr, start, mid-1, k);
 } 
+
+int searchNonDuplicate (int * arr, int start, int end, int n) {
+
+    if (end == start) return arr[start];
+
+    int mid = (start + end)/2;
+
+    // cout << "start " << start << " end " << end << endl;
+    // cout << "mid " << mid << " value " << arr[mid] << endl;
+
+    if ((mid - start) %2 != 0) {
+        if (mid-1 >= 0 and arr[mid] == arr[mid-1]) {
+            if ((end - mid) % 2 == 0) return searchNonDuplicate (arr, mid, end, n);
+            else return searchNonDuplicate (arr, mid+1, end, n) ;
+        }
+
+        else {
+            if (mid+1 < n and arr[mid] != arr[mid+1]) return arr[mid];
+            else {
+                if ((mid - start) % 2 == 0) return searchNonDuplicate(arr, start, mid, n);
+                else return searchNonDuplicate (arr, start, mid-1, n);
+            }
+        }
+    }
+
+    else {
+        if (mid-1 >= 0 and arr[mid] == arr[mid-1]) {
+            if ((mid - start) % 2 == 0) return searchNonDuplicate(arr, start, mid, n);
+            else return searchNonDuplicate (arr, start, mid-1, n);
+        }
+
+        else {
+            if (mid+1 < n and arr[mid] != arr[mid+1]) return arr[mid];
+            else {
+                if ((end - mid) % 2 == 0) return searchNonDuplicate (arr, mid, end, n);
+                else return searchNonDuplicate (arr, mid+1, end, n) ;
+            }
+        }
+    }
+}
+
+int main () {
+    int arr[] = {0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12};
+    int n = sizeof (arr)/ sizeof (int);
+
+    cout << searchNonDuplicate (arr, 0, n-1, n) << endl;
+}
+
+
+
