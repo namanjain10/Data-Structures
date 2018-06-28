@@ -630,68 +630,146 @@
 //     cout << str1 << '\n'; 
 // }
 
- 
+
 // find the element in the sorted array not appaering twice
+
+// #include <iostream>
+// using namespace std;
+
+// int binarySearch (int * arr, int start, int end, int k) {
+
+//     if (end - start <= 0) return start;
+
+//     int mid = (start + end)/2; 
+
+//     if (arr[mid] < k) return binarySearch (arr, mid+1, end, k);
+//     else return binarySearch (arr, start, mid-1, k);
+// } 
+
+// int searchNonDuplicate (int * arr, int start, int end, int n) {
+
+//     if (end == start) return arr[start];
+
+//     int mid = (start + end)/2;
+
+//     // cout << "start " << start << " end " << end << endl;
+//     // cout << "mid " << mid << " value " << arr[mid] << endl;
+
+//     if ((mid - start) %2 != 0) {
+//         if (mid-1 >= 0 and arr[mid] == arr[mid-1]) {
+//             if ((end - mid) % 2 == 0) return searchNonDuplicate (arr, mid, end, n);
+//             else return searchNonDuplicate (arr, mid+1, end, n) ;
+//         }
+
+//         else {
+//             if (mid+1 < n and arr[mid] != arr[mid+1]) return arr[mid];
+//             else {
+//                 if ((mid - start) % 2 == 0) return searchNonDuplicate(arr, start, mid, n);
+//                 else return searchNonDuplicate (arr, start, mid-1, n);
+//             }
+//         }
+//     }
+
+//     else {
+//         if (mid-1 >= 0 and arr[mid] == arr[mid-1]) {
+//             if ((mid - start) % 2 == 0) return searchNonDuplicate(arr, start, mid, n);
+//             else return searchNonDuplicate (arr, start, mid-1, n);
+//         }
+
+//         else {
+//             if (mid+1 < n and arr[mid] != arr[mid+1]) return arr[mid];
+//             else {
+//                 if ((end - mid) % 2 == 0) return searchNonDuplicate (arr, mid, end, n);
+//                 else return searchNonDuplicate (arr, mid+1, end, n) ;
+//             }
+//         }
+//     }
+// }
+
+// int main () {
+//     int arr[] = {0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12};
+//     int n = sizeof (arr)/ sizeof (int);
+
+//     cout << searchNonDuplicate (arr, 0, n-1, n) << endl;
+// }
+
+
+// toppers of class
+
+// #include <iostream>
+// #include <algorithm>
+// using namespace std;
+
+// struct student{
+//     int id, marks;
+// };
+
+// int func (student a, student b) {
+//     return (a.marks > b.marks) ? 1 : 0;
+// }
+
+// int main() {
+	
+// 	int t;
+// 	cin >> t;
+	
+// 	while (t--) {
+// 	    int n, k; 
+// 	    student arr[10000];
+	    
+// 	    cin >> n >> k;
+	    
+// 	    for (int i=0; i<n; i++) {
+// 	        arr[i].id = i;
+// 	        cin >> arr[i].marks;
+// 	    }
+	    
+// 	    sort (arr, arr+n, func);
+	    
+// 	    int small = 100;
+	    
+// 	    for (int i=0; i<n; i++) {
+	        
+// 	        if (small > arr[i].marks) {
+// 	            small = arr[i].marks;
+// 	            k--;
+// 	        }
+// 	        if (k == -1) break;
+// 	        cout << arr[i].id << " ";
+	        
+// 	    }
+// 	    cout << '\n';
+// 	}
+// 	return 0;
+// }
+
+
+// int main () {
+// 	int n, k; 
+// 	student arr[10000];
+
+// 	cin >> n;
+
+// 	for (int i=0; i<n; i++) {
+// 		arr[i].id = i;
+// 		cin >> arr[i].marks;
+// 	}
+// 	sort (arr, arr+n, func);
+// 	for (int i=0; i<n; i++) {
+// 		cout << "marks " << arr[i].marks << " id " << arr[i].id << "\n"; 
+// 	}
+// }
 
 #include <iostream>
 using namespace std;
 
-int binarySearch (int * arr, int start, int end, int k) {
-
-    if (end - start <= 0) return start;
-
-    int mid = (start + end)/2; 
-
-    if (arr[mid] < k) return binarySearch (arr, mid+1, end, k);
-    else return binarySearch (arr, start, mid-1, k);
-} 
-
-int searchNonDuplicate (int * arr, int start, int end, int n) {
-
-    if (end == start) return arr[start];
-
-    int mid = (start + end)/2;
-
-    // cout << "start " << start << " end " << end << endl;
-    // cout << "mid " << mid << " value " << arr[mid] << endl;
-
-    if ((mid - start) %2 != 0) {
-        if (mid-1 >= 0 and arr[mid] == arr[mid-1]) {
-            if ((end - mid) % 2 == 0) return searchNonDuplicate (arr, mid, end, n);
-            else return searchNonDuplicate (arr, mid+1, end, n) ;
-        }
-
-        else {
-            if (mid+1 < n and arr[mid] != arr[mid+1]) return arr[mid];
-            else {
-                if ((mid - start) % 2 == 0) return searchNonDuplicate(arr, start, mid, n);
-                else return searchNonDuplicate (arr, start, mid-1, n);
-            }
-        }
-    }
-
-    else {
-        if (mid-1 >= 0 and arr[mid] == arr[mid-1]) {
-            if ((mid - start) % 2 == 0) return searchNonDuplicate(arr, start, mid, n);
-            else return searchNonDuplicate (arr, start, mid-1, n);
-        }
-
-        else {
-            if (mid+1 < n and arr[mid] != arr[mid+1]) return arr[mid];
-            else {
-                if ((end - mid) % 2 == 0) return searchNonDuplicate (arr, mid, end, n);
-                else return searchNonDuplicate (arr, mid+1, end, n) ;
-            }
-        }
-    }
-}
-
 int main () {
-    int arr[] = {0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12};
-    int n = sizeof (arr)/ sizeof (int);
+	int n, k, arr[10000]; 
+	cin >> n;
+	for (int i=0; i<n; i++) {
+		cin >> arr[i];
+	} 
+	cin >> k;
+	cout << arr[k];
 
-    cout << searchNonDuplicate (arr, 0, n-1, n) << endl;
 }
-
-
-
