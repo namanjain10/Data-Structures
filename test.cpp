@@ -698,6 +698,7 @@
 
 // #include <iostream>
 // #include <algorithm>
+// #include <limits.h>
 // using namespace std;
 
 // struct student{
@@ -705,7 +706,10 @@
 // };
 
 // int func (student a, student b) {
-//     return (a.marks > b.marks) ? 1 : 0;
+    
+//     if(a.marks > b.marks) return true;
+//     if(a.marks == b.marks) return a.id < b.id;
+//     return false;
 // }
 
 // int main() {
@@ -717,16 +721,18 @@
 // 	    int n, k; 
 // 	    student arr[10000];
 	    
-// 	    cin >> n >> k;
+// 	    cin >> n;
 	    
 // 	    for (int i=0; i<n; i++) {
 // 	        arr[i].id = i;
 // 	        cin >> arr[i].marks;
 // 	    }
 	    
+// 	    cin >> k;
+	    
 // 	    sort (arr, arr+n, func);
 	    
-// 	    int small = 100;
+// 	    int small = INT_MAX;
 	    
 // 	    for (int i=0; i<n; i++) {
 	        
@@ -744,32 +750,94 @@
 // }
 
 
-// int main () {
-// 	int n, k; 
-// 	student arr[10000];
+// magnet problem
 
-// 	cin >> n;
+// #include <iostream>
+// #include <iomanip>
+// using namespace std;
 
-// 	for (int i=0; i<n; i++) {
-// 		arr[i].id = i;
-// 		cin >> arr[i].marks;
+// long double findZero (long double start, long double end, int * arr, int k, int n) {
+
+// 	// cout << "entering " << start << " " << end << " " << end - start << "\n";
+
+// 	if (end - start <= 0.0000000000001) return start;
+
+// 	long double mid = (start + end) / 2;
+// 	long double sum = 0;
+
+// 	for (int i=0; i<=k; i++) {
+// 		sum += 1/(arr[i] - mid);
 // 	}
-// 	sort (arr, arr+n, func);
-// 	for (int i=0; i<n; i++) {
-// 		cout << "marks " << arr[i].marks << " id " << arr[i].id << "\n"; 
+
+// 	for (int i=k+1; i<n; i++) {
+// 		sum += 1/(arr[i] - mid);
 // 	}
+
+// 	if (sum == 0) return mid;
+// 	else if (sum > 0) return findZero (start, mid, arr, k, n);
+// 	else return findZero (mid, end, arr, k, n);
 // }
 
+// double round (long double k) {
+// 	double value = (int)(k * 100 + .5);
+//     return (double)value / 100;
+// }  
+
+// int main() {
+	
+// 	int arr[] = {0, 10, 20, 30};
+// 	int n = sizeof(arr) / sizeof(int);
+
+// 	for (int i=0; i<n-1; i++) {
+// 		cout << fixed << setprecision(2) << findZero (arr[i], arr[i+1], arr, i, n) << " ";
+// 	}
+// 	cout << '\n';
+// }
+ 
+
+// sum of 2 elements of an array equal to k 
+
 #include <iostream>
+#include <map>
 using namespace std;
 
-int main () {
-	int n, k, arr[10000]; 
-	cin >> n;
-	for (int i=0; i<n; i++) {
-		cin >> arr[i];
-	} 
-	cin >> k;
-	cout << arr[k];
+void getPair(int * arr, int n, int k) {
+	map <int, int> hash;
 
+	for (int i=0; i<n; i++) {
+		hash.insert(pair<int, int> (arr[i], i));
+	}
+	map<int, int> :: iterator i;
+    map<int, int> check;
+
+	for (i = hash.begin(); i != hash.end(); i++) {
+
+		if (hash.count(k - i->first) > 0) {
+            
+            if (hash.find(k - i->first)->second != i->second && check.count(hash.find(k - i->first)->second) == 0 && check.count(i->second) == 0){
+
+                cout << i->first << ", " << hash.find(k - i->first)->first << "\n";
+                check.insert(pair<int, int>(i->second, 1));
+                check.insert(pair<int, int>(hash.find(k - i->first)->second, 1));
+            }
+        }
+	}
+} 
+
+int main () {
+
+	int arr[] = {8, 3, 5, 1, 2, 2, 7};
+	int n = sizeof(arr) / sizeof(int);
+	int k = 10;
+
+	getPair (arr, n, k); 
 }
+
+// 
+
+// #include <iostream>
+// using namespace std;
+
+// int main () {
+
+// }
