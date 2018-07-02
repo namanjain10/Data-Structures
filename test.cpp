@@ -797,47 +797,108 @@
 
 // sum of 2 elements of an array equal to k 
 
-#include <iostream>
-#include <map>
-using namespace std;
+// #include <iostream>
+// #include <map>
+// using namespace std;
 
-void getPair(int * arr, int n, int k) {
-	map <int, int> hash;
+// void getPair(int * arr, int n, int k) {
+// 	map <int, int> hash;
 
-	for (int i=0; i<n; i++) {
-		hash.insert(pair<int, int> (arr[i], i));
-	}
-	map<int, int> :: iterator i;
-    map<int, int> check;
+// 	for (int i=0; i<n; i++) {
+// 		hash.insert(pair<int, int> (arr[i], i));
+// 	}
+// 	map<int, int> :: iterator i;
+//     map<int, int> check;
 
-	for (i = hash.begin(); i != hash.end(); i++) {
+// 	for (i = hash.begin(); i != hash.end(); i++) {
 
-		if (hash.count(k - i->first) > 0) {
+// 		if (hash.count(k - i->first) > 0) {
             
-            if (hash.find(k - i->first)->second != i->second && check.count(hash.find(k - i->first)->second) == 0 && check.count(i->second) == 0){
+//             if (hash.find(k - i->first)->second != i->second && check.count(hash.find(k - i->first)->second) == 0 && check.count(i->second) == 0){
 
-                cout << i->first << ", " << hash.find(k - i->first)->first << "\n";
-                check.insert(pair<int, int>(i->second, 1));
-                check.insert(pair<int, int>(hash.find(k - i->first)->second, 1));
-            }
-        }
-	}
-} 
+//                 cout << i->first << ", " << hash.find(k - i->first)->first << "\n";
+//                 check.insert(pair<int, int>(i->second, 1));
+//                 check.insert(pair<int, int>(hash.find(k - i->first)->second, 1));
+//             }
+//         }
+// 	}
+// } 
 
-int main () {
+// int main () {
 
-	int arr[] = {8, 3, 5, 1, 2, 2, 7};
-	int n = sizeof(arr) / sizeof(int);
-	int k = 10;
+// 	int arr[] = {8, 3, 5, 1, 2, 2, 7};
+// 	int n = sizeof(arr) / sizeof(int);
+// 	int k = 10;
 
-	getPair (arr, n, k); 
-}
+// 	getPair (arr, n, k); 
+// }
 
-// 
+
+// search the smallest number in a sorted rotated array
 
 // #include <iostream>
 // using namespace std;
 
-// int main () {
+// int findSmallest (int * arr, int n, int start, int end) {
+//     if (end -start <= 0) return arr[start];
 
+//     int mid = (start + end) /2;
+    
+//     cout << "start " << start << " end " << end << " arr[mid] " << arr[mid] << endl;
+
+//     if (arr[mid-1] > arr[mid]) return arr[mid];
+//     else if (arr[mid] < arr[n-1]) return findSmallest (arr, n, start, mid-1);
+//     else return findSmallest (arr, n, mid+1, end);
 // }
+ 
+// int main () {
+//     int arr[] = {3,4,5,6,1,2};
+//     int n = sizeof(arr)/sizeof(int);
+
+//     cout << findSmallest (arr, n, 0, n-1) << endl;
+// }
+
+
+// search an element in a sorted rotated array
+
+#include <iostream>
+using namespace std;
+
+int findSmallest (int * arr, int n, int start, int end) {
+    if (end -start <= 0) return start;
+
+    int mid = (start + end) /2;
+    
+    if (arr[mid-1] > arr[mid]) return mid;
+    else if (arr[mid] < arr[n-1]) return findSmallest (arr, n, start, mid-1);
+    else return findSmallest (arr, n, mid+1, end);
+}
+
+int binarySearch (int* arr, int start, int end, int k) {
+    if (end - start <= 0) {
+        if (arr[start] == k)
+        return start;
+        return -1;
+    }
+    int mid = (start + end) /2;
+
+    if (arr[mid] == k) return mid;
+    else if (arr[mid] > k) return binarySearch (arr, start, mid-1, k);
+    else return binarySearch (arr, mid+1, end, k);
+}
+
+int findElement (int * arr, int n, int start, int end, int k) {
+    int i = findSmallest (arr, n, start, end);
+    int x = binarySearch (arr, start, i, k);
+    if (x != -1) return x;
+    int y = binarySearch (arr, i+1, end, k); 
+    if (y != -1) return y;
+    return -1;
+}
+
+int main() {
+    int arr[] = {4,5,6,1,2,3};
+    int n = sizeof(arr)/sizeof(int);
+    cout << findElement (arr, n, 0, n-1, 3) << endl;
+}
+
