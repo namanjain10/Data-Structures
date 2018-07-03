@@ -516,7 +516,7 @@ Node* newNode (int data) {
     return (node);
 }
 
-Node* lca (Node* root, int a, int b) {
+Node* lcaBst (Node* root, int a, int b) {
 
 	Node* add = root;
 
@@ -531,6 +531,51 @@ Node* lca (Node* root, int a, int b) {
 		else break;
 	} 
 	return add;
+}
+
+// incomplete lca for binary tree
+void getArray (Node* root, int x, vector<int> &arr) {
+	if (root == NULL) return;
+	if (root->val == x) {
+		return;
+	}
+
+	arr.push_back(root->val);
+	getArray (root->left, x, arr);
+	getArray (root->right, x, arr);
+
+	arr.pop_back();
+}
+
+Node* lca (Node* root, int a, int b) {
+
+	vector<int> arr1, arr2;
+	getArray (root, a, arr1);
+	getArray (root, b, arr2);
+
+	vector <int> :: iterator i;
+	cout << "start now\n";
+
+	for (i = arr1.begin(); i != arr1.end(); ++i)
+        cout << *i << '\t';
+
+	return root;
+}
+
+void sumVerticalRec (Node* root, int pos, map<int, int>& hash) {
+	if (root == NULL) return;
+	if (hash.count(pos) == 0) hash.insert(pair<int, int>(pos,root->val));
+	else hash.find(pos)->second += root->val;
+
+	sumVerticalRec (root->left, pos-1, hash);
+	sumVerticalRec (root->right, pos+1, hash);
+}
+
+void sumVertical (Node* root) {
+	map<int, int> hash;
+	sumVerticalRec(root, 0, hash);
+	map<int, int> :: iterator ittr; 
+	for (ittr = hash.begin(); ittr != hash.end(); ++ittr) cout << ittr->first << " " << ittr->second << "\n"; 
 }
 
 int main() {
@@ -633,12 +678,16 @@ int main() {
 	printLevelOrder (root);
 	cout << endl;
 
-	Node* add = lca (root, 10, 14);
+	Node* add = lcaBst (root, 10, 14);
 	cout << add->val << endl;
-	add = lca (root, 8, 14);
+	add = lcaBst (root, 8, 14);
 	cout << add->val << endl;
-	add = lca (root, 10, 22);
+	add = lcaBst (root, 10, 22);
 	cout << add->val << endl;
+
+	lca (root, 8, 14);
+	cout << "vertical " << endl;
+	sumVertical  (root);
 }
 
 /*
