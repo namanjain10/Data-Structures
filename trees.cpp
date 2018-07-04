@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <limits.h>
 #include <map>
 
 using namespace std;
@@ -486,8 +487,8 @@ void printCornerNodes (Node* add) {
 	printCornerNodesUtil(add, 1, &max_level);
 }
 
-// incomplete print leftmost and rightmost node at each level
-void printLevelOrder1 (Node* add) {
+// print leftmost and rightmost node at each level
+void printLeftRight (Node* add) {
 	queue <pair<int, Node*> > arr;
 	int level = 0;
 	arr.push(make_pair(level+1, add));
@@ -512,6 +513,42 @@ void printLevelOrder1 (Node* add) {
 	}
 	if (left != prev)
 	cout << prev->val ;
+}
+
+
+int levelOrderSorted (Node* add) {
+	queue <pair<int, Node*> > arr;
+	int level = 0;
+	
+	arr.push(make_pair(level, add));
+
+	Node* prev = NULL;
+	Node* left;
+
+	int smallest = INT_MAX, largest = INT_MIN, prev_largest = INT_MIN;
+
+	while (!arr.empty()) {
+		Node* x = arr.front().second;
+		int y = arr.front().first;
+		arr.pop();
+		
+		if (y != level) {
+			if (smallest < prev_largest) return 0;
+			
+			level = y;
+			prev_largest = largest;
+			smallest = INT_MAX;
+			largest = INT_MIN;
+		}
+
+		if (x->val < smallest) smallest = x->val;
+		if (x->val > largest) largest = x->val;
+		
+		if (x->left != NULL) arr.push(make_pair(y+1, x->left));
+		if (x->right != NULL) arr.push(make_pair(y+1, x->right));
+	}
+	if (smallest < prev_largest) return 0;
+	return 1;
 }
 
 
@@ -673,7 +710,11 @@ int main() {
 	// printCornerNodes (inPre1);
 	// cout << "\n";
 	cout << "left right ";
-	printLevelOrder1 (inPre1);
+	printLeftRight (inPre1);
+	cout << "\n";
+
+	cout << levelOrderSorted (inPre1);
+	
 	cout << "\n";
 
 	struct Node *root        = newNode(20);
