@@ -492,20 +492,26 @@ void printLevelOrder1 (Node* add) {
 	int level = 0;
 	arr.push(make_pair(level+1, add));
 	Node* prev = NULL;
+	Node* left;
 
 	while (!arr.empty()) {
 		Node* x = arr.front().second;
 		int y = arr.front().first;
 		arr.pop();
+		
 		if (x->left != NULL) arr.push(make_pair(y+1, x->left));
 		if (x->right != NULL) arr.push(make_pair(y+1, x->right));
+		
 		if (y != level) {
-			if (prev != NULL && x != prev) cout << prev->val << " " << " level " << level << "\n";
-			cout << x->val << " " << " level " << y << "\n";
+			if (prev != NULL && x != prev && left != prev) cout << prev->val << " ";
+			cout << x->val << " ";
+			left = x;
 			level = y;
 		}
 		prev = x;
 	}
+	if (left != prev)
+	cout << prev->val ;
 }
 
 
@@ -637,10 +643,10 @@ int main() {
 	// cout << "min Leaf dist of 4 is " << minLeafNode(inPost, 4) << endl;
 	// cout << "min Leaf dist of 1 is " << minLeafNode(inPost, 1) << endl;
 
-	// int pre1[] = {1,2,3,4,5,6,7,8,9,10};
-	// int in1[] = {3,2,7,6,8,5,4,1,10,9};
+	int pre1[] = {1,2,3,4,5,6,7,8,9,10};
+	int in1[] = {3,2,7,6,8,5,4,1,10,9};
 
-	// Node* inPre1 = constTreeInPre (in1, pre1, 0, 9);
+	Node* inPre1 = constTreeInPre (in1, pre1, 0, 9);
 	// printPre(inPre1);
 	// cout << '\n';
 	// printPre(inPre1);
@@ -663,9 +669,12 @@ int main() {
 	// cout << '\n';
 	// cout << "DiagonalPrint\n";
 	// printDiagonal (inPre1);
+	// cout << "print corner nodes ";
 	// printCornerNodes (inPre1);
-	// cout << "Level Order\n";
-	// printLevelOrder1 (inPre1);
+	// cout << "\n";
+	cout << "left right ";
+	printLevelOrder1 (inPre1);
+	cout << "\n";
 
 	struct Node *root        = newNode(20);
     root->left               = newNode(8);
