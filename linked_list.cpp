@@ -745,51 +745,59 @@ int main() {
 	pushList (list3, 75);
 
 	print (list3);
-	Node* y = MaxSumList(list2, list3);
-	cout << "print MaxSumList\n";
-	printList (y);
+
+	MergeSortedList (list2, list3);
+
+	cout << "merged list ";
+	print (list2);
+
+	// Node* y = MaxSumList(list2, list3);
+	// cout << "print MaxSumList\n";
+	// printList (y);
 	
-	// oddEven1(list3->head);
+	// // oddEven1(list3->head);
 
-	// MergeSortedListRev(list2, list3);
-	// cout << "list2 ";
-	// print (list2);
-	//
-	// oddEven(list3);
-	// cout << "list3 " ;
+	// // MergeSortedListRev(list2, list3);
+	// // cout << "list2 ";
+	// // print (list2);
+	// //
+	// // oddEven(list3);
+	// // cout << "list3 " ;
+	// // print (list3);
+	// //
+	// // cout << "merge\n";
+	// // mergeAlternate (list2->head, list3->head);
+	// // print (list2);
+	// //
+	// List* list4 = newList();
+
+	// // pushList (list4, 5);
+	// pushList (list4, 1);
+	// pushList (list4, 0);
+	// pushList (list4, 2);
+	// pushList (list4, 1);
+	// pushList (list4, 1);
+	// pushList (list4, 1);
+	// pushList (list4, 1);
+	// pushList (list4, 2);
+	// pushList (list4, 0);
+	// pushList (list4, 1);
+	// pushList (list4, 1);
+
+	// print (list4);
+	// sort012 (list4);
+	// cout << "sorted ";
+	// print (list4);
+
+	// insertNthEnd(list4, 4, 2);
+	// print (list4);
+
 	// print (list3);
-	//
-	// cout << "merge\n";
-	// mergeAlternate (list2->head, list3->head);
-	// print (list2);
-	//
-	List* list4 = newList();
+	// ReverseAlternateKNodes (list3, 3);
+	// cout << "list3 \n";
+	// print (list3);
+	// pairwiseSwap (list3);
+	// print (list3);
 
-	// pushList (list4, 5);
-	pushList (list4, 1);
-	pushList (list4, 0);
-	pushList (list4, 2);
-	pushList (list4, 1);
-	pushList (list4, 1);
-	pushList (list4, 1);
-	pushList (list4, 1);
-	pushList (list4, 2);
-	pushList (list4, 0);
-	pushList (list4, 1);
-	pushList (list4, 1);
 
-	print (list4);
-	sort012 (list4);
-	cout << "sorted ";
-	print (list4);
-
-	insertNthEnd(list4, 4, 2);
-	print (list4);
-
-	print (list3);
-	ReverseAlternateKNodes (list3, 3);
-	cout << "list3 \n";
-	print (list3);
-	pairwiseSwap (list3);
-	print (list3);
 }

@@ -30,13 +30,13 @@ int maxRodPrice (int* arr, int size) {
     return arr[size];
 }
 
-int matrixChainOrder () {
+// int matrixChainOrder () {
 
-}
+// }
 
 int main() {
     cout << nBricks (47) << endl;
-    int arr[] = {1, 5, 8, 9, 10, 17, 17, 20};
-    int size = sizeof(arr)/sizeof(arr[0]);
-    cout << maxRodPrice (arr, size) << endl;
+    // int arr[] = {1, 5, 8, 9, 10, 17, 17, 20};
+    // int size = sizeof(arr)/sizeof(arr[0]);
+    // cout << maxRodPrice (arr, size) << endl;
 }

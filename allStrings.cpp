@@ -1,5 +1,5 @@
 #include <iostream>
-#include <math.h>
+#include <math.h>   
 using namespace std;
 
 void printStrings(int n, string s) {
@@ -11,7 +11,7 @@ void printStrings(int n, string s) {
     printStrings(n - 1, s + "0");
     printStrings(n - 1, s + "1");
 }
-
+    
 int largestContSum(int *arr, int n) {
 
     int largest = 0, large_till = 0;

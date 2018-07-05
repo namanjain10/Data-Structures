@@ -861,44 +861,100 @@
 
 // search an element in a sorted rotated array
 
+// #include <iostream>
+// using namespace std;
+
+// int findSmallest (int * arr, int n, int start, int end) {
+//     if (end -start <= 0) return start;
+
+//     int mid = (start + end) /2;
+    
+//     if (arr[mid-1] > arr[mid]) return mid;
+//     else if (arr[mid] < arr[n-1]) return findSmallest (arr, n, start, mid-1);
+//     else return findSmallest (arr, n, mid+1, end);
+// }
+
+// int binarySearch (int* arr, int start, int end, int k) {
+//     if (end - start <= 0) {
+//         if (arr[start] == k)
+//         return start;
+//         return -1;
+//     }
+//     int mid = (start + end) /2;
+
+//     if (arr[mid] == k) return mid;
+//     else if (arr[mid] > k) return binarySearch (arr, start, mid-1, k);
+//     else return binarySearch (arr, mid+1, end, k);
+// }
+
+// int findElement (int * arr, int n, int start, int end, int k) {
+//     int i = findSmallest (arr, n, start, end);
+//     int x = binarySearch (arr, start, i, k);
+//     if (x != -1) return x;
+//     int y = binarySearch (arr, i+1, end, k); 
+//     if (y != -1) return y;
+//     return -1;
+// }
+
+// int main() {
+//     int arr[] = {4,5,6,1,2,3};
+//     int n = sizeof(arr)/sizeof(int);
+//     cout << findElement (arr, n, 0, n-1, 3) << endl;
+// }
+
+// find the majority element
+
+// #include <iostream>
+// #include <map>
+// using namespace std;
+
+// void findMajorityElement (int * arr, int n) {
+//     map <int, int> hash;
+//     for (int i=0; i<n; i++) {
+//         if (hash.count(arr[i]) == 0) {
+//             hash.insert(pair<int,int> (arr[i], 1));
+//         }
+//         else {
+//             map<int, int>:: iterator itr = hash.find(arr[i]);
+//             itr->second ++; 
+//         } 
+//     }
+//     map<int, int>:: iterator itr;
+//     for (itr = hash.begin(); itr != hash.end(); ++itr) {
+//         if (itr->second >= n/2) {
+//             cout << itr->first << endl;
+//             return;
+//         }
+//     }
+//     cout << "NO Majority Element\n";
+// }
+
+// int main() {
+//     int arr[] = {4,4,14,24,2,3};
+//     int n = sizeof(arr)/sizeof(int);
+//     findMajorityElement (arr, n);
+// }
+
+
+// check if mathematical expressions are same
+
 #include <iostream>
+#include <stack>
 using namespace std;
 
-int findSmallest (int * arr, int n, int start, int end) {
-    if (end -start <= 0) return start;
+int same (string s1, string s2) {
+    stack <char, int> brackets;
+    int sign = 0;
 
-    int mid = (start + end) /2;
-    
-    if (arr[mid-1] > arr[mid]) return mid;
-    else if (arr[mid] < arr[n-1]) return findSmallest (arr, n, start, mid-1);
-    else return findSmallest (arr, n, mid+1, end);
-}
-
-int binarySearch (int* arr, int start, int end, int k) {
-    if (end - start <= 0) {
-        if (arr[start] == k)
-        return start;
-        return -1;
+    for (int i=0; i<s1.length(); i++) {
+        if (s1[i] == '-') sign = 1;
+        if (s1[i] == '(') 
     }
-    int mid = (start + end) /2;
-
-    if (arr[mid] == k) return mid;
-    else if (arr[mid] > k) return binarySearch (arr, start, mid-1, k);
-    else return binarySearch (arr, mid+1, end, k);
-}
-
-int findElement (int * arr, int n, int start, int end, int k) {
-    int i = findSmallest (arr, n, start, end);
-    int x = binarySearch (arr, start, i, k);
-    if (x != -1) return x;
-    int y = binarySearch (arr, i+1, end, k); 
-    if (y != -1) return y;
-    return -1;
 }
 
 int main() {
-    int arr[] = {4,5,6,1,2,3};
-    int n = sizeof(arr)/sizeof(int);
-    cout << findElement (arr, n, 0, n-1, 3) << endl;
+    string s1, s2;
+    cin >> s1 >> s2;
+    cout << same(s1, s2) << endl; 
 }
 
