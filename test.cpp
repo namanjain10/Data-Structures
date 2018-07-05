@@ -936,25 +936,55 @@
 // }
 
 
-// check if mathematical expressions are same
+// incomplete check if mathematical expressions are same
+
+// #include <iostream>
+// #include <stack>
+// using namespace std;
+
+// int same (string s1, string s2) {
+//     stack <pair<char, int> > brackets;
+//     int sign = 0;
+
+//     for (int i=0; i<s1.length(); i++) {
+//         if (s1[i] == '-') sign = 1;
+//         if (s1[i] == '(') ;
+//     }
+// }
+
+// int main() {
+//     string s1, s2;
+//     cin >> s1 >> s2;
+//     cout << same(s1, s2) << endl; 
+// }
+
+// smallest number digit product k  
 
 #include <iostream>
-#include <stack>
+#include <math.h>
 using namespace std;
 
-int same (string s1, string s2) {
-    stack <char, int> brackets;
-    int sign = 0;
-
-    for (int i=0; i<s1.length(); i++) {
-        if (s1[i] == '-') sign = 1;
-        if (s1[i] == '(') 
+int smallestNumber(int k) {
+    int i = 9, arr[1000], m = 0;
+    
+    while (i>1 && k > 1) {
+        if (k%i == 0) {
+            arr[m++] = i;
+            k = k/i;
+            i = 9;
+        }
+        else i--;
     }
+    
+    int sum = 0;
+    if (k != 1) return -1;
+
+    while (m--) {
+        sum += pow(10,m) * arr[m];
+    } 
+    return sum;   
 }
 
 int main() {
-    string s1, s2;
-    cin >> s1 >> s2;
-    cout << same(s1, s2) << endl; 
+    cout << smallestNumber (27) << endl;
 }
-
