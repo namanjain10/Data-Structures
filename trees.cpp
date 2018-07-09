@@ -400,6 +400,22 @@ void verticalPrint(Node* add) {
 	}
 }
 
+void verticalLengthUtil (Node* add, int pos, int &min, int &max) {
+	if (add == NULL) return;
+
+	if (pos < min) min = pos;
+	if (pos > max) max = pos;
+
+	verticalLengthUtil (add->left, pos-1, min, max);
+	verticalLengthUtil (add->right, pos+1, min, max);
+}
+
+int verticalLength (Node* add) {
+	int min = 0, max = 0;
+	verticalLengthUtil (add, 0, min, max);
+	return max - min;
+}
+
 void printSameLevel(Node* add, int h, int k) {
 	if (add == NULL) return;
 	if (h == k) {
@@ -684,6 +700,7 @@ int main() {
 	int in1[] = {3,2,7,6,8,5,4,1,10,9};
 
 	Node* inPre1 = constTreeInPre (in1, pre1, 0, 9);
+	cout << "Vertical Length " << verticalLength (inPre1) << "\n";
 	// printPre(inPre1);
 	// cout << '\n';
 	// printPre(inPre1);
