@@ -64,6 +64,7 @@
 //     cout << min_x << " " << min_y << " " << max_x << " " << max_y << '\n';
 // }
 
+
 // spiral print
 
 // #include <iostream>
@@ -960,31 +961,153 @@
 
 // smallest number digit product k  
 
-#include <iostream>
-#include <math.h>
+// #include <iostream>
+// #include <math.h>
+// using namespace std;
+
+// int smallestNumber(int k) {
+//     int i = 9, arr[1000], m = 0;
+    
+//     while (i>1 && k > 1) {
+//         if (k%i == 0) {
+//             arr[m++] = i;
+//             k = k/i;
+//             i = 9;
+//         }
+//         else i--;
+//     }
+    
+//     int sum = 0;
+//     if (k != 1) return -1;
+
+//     while (m--) {
+//         sum += pow(10,m) * arr[m];
+//     } 
+//     return sum;   
+// }
+
+// int main() {
+//     cout << smallestNumber (27) << endl;
+// }
+
+
+// incomplete combinational sum 
+
+// #include <iostream>
+// using namespace std;
+
+// void combinationalSumUtil (int * arr, int n, int i, int sum, int x) {
+    
+//     int k = i;
+//     while (sum < x && k<n) {        
+//         cout << "adding " << arr[k] << " to sum " << sum << " " ;
+//         sum = sum + arr[k];
+//         // cout << "sum is " << sum << "\n";
+//         if (sum == x) {
+//             cout << "got it\n";
+//             return;
+//         }
+//         combinationalSumUtil (arr, n, k, sum, x);
+//         // sum = sum - arr[k];
+//         k++;
+//     }
+//     // cout << "exit\n";
+//     return;
+// }   
+
+// void combinationalSum (int * arr, int n, int x) {
+//     int i=0; 
+//     while (i != n) {
+//         cout << "for " << arr[i] << ".........\n";
+//         combinationalSumUtil (arr, n, i, 0, x);
+//         i++;
+//     }    
+// }
+
+// int main () {
+//     int arr[] = {2,4,6,8};
+//     int n = sizeof (arr) / sizeof (int);
+//     combinationalSum (arr, n, 8);
+// }
+
+
+// incomplete segregate and order odd even
+
+// #include <iostream>
+// using namespace std;
+
+// void swap (int * arr, int a, int b) {
+//     int temp = arr[a];
+//     arr[a] = arr[b];
+//     arr[b] = temp;
+// }
+
+// void segregateOddEven (int *arr, int n) {
+//     int a = 0, b = 0;
+//     cout << "entered\n";
+//     while (a != n-1 && b != n-1) {
+//         while (arr[a]%2 != 0) {
+//             a++;
+//         }
+//         cout << "a is " << a << endl; 
+//         while (arr[b]%2 != 1) {
+//             b++;
+//         }
+//         cout << "b is " << b << '\n';
+//         if (b < a) {
+//             cout << "swap " << arr[a] << " " << arr[b] << '\n';
+//             swap(arr, a, b);
+//         }
+//         a++;
+//         b++;
+//     }  
+
+// }
+
+// int main () {
+//     int arr[] = {3,4,1,7,2,6,9};
+//     int n = sizeof(arr)/sizeof(int);
+
+//     segregateOddEven (arr, n);
+
+//     for (int i=0; i<n; i++) cout << arr[i] << " ";
+//     cout << '\n';
+// }
+
+
+// incomplete maximum sum after k negations
+
+# include <iostream>
+# include <queue>
+#include <algorithm>
 using namespace std;
 
-int smallestNumber(int k) {
-    int i = 9, arr[1000], m = 0;
-    
-    while (i>1 && k > 1) {
-        if (k%i == 0) {
-            arr[m++] = i;
-            k = k/i;
-            i = 9;
-        }
-        else i--;
+int maximizeSum (int * arr, int n, int k) {
+    priority_queue <int, vector<int>, greater<int> > queue;
+
+    for (int i=0; i<n; i++)
+    queue.push (arr[i]);
+
+    while (k--) {
+        int x = queue.top();
+        queue.pop();
+        queue.push (-x);
     }
-    
     int sum = 0;
-    if (k != 1) return -1;
-
-    while (m--) {
-        sum += pow(10,m) * arr[m];
-    } 
-    return sum;   
+    for (int i = 0; i < n; i++) {
+        sum += queue.top();
+        queue.pop();
+    }
+    return sum;
 }
 
-int main() {
-    cout << smallestNumber (27) << endl;
+int main () {
+    int arr[] = {-2, 0, -5, -1, -2};
+    int n = sizeof(arr)/sizeof(int);
+    cout << maximizeSum (arr, n, 4) << endl; 
 }
+
+// 
+
+
+
