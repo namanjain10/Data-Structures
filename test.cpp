@@ -1075,37 +1075,37 @@
 // }
 
 
-// incomplete maximum sum after k negations
+// maximum sum after k negations
 
-# include <iostream>
-# include <queue>
-#include <algorithm>
-using namespace std;
+// # include <iostream>
+// # include <queue>
+// #include <algorithm>
+// using namespace std;
 
-int maximizeSum (int * arr, int n, int k) {
-    priority_queue <int, vector<int>, greater<int> > queue;
+// int maximizeSum (int * arr, int n, int k) {
+//     priority_queue <int, vector<int>, greater<int> > queue;
 
-    for (int i=0; i<n; i++)
-    queue.push (arr[i]);
+//     for (int i=0; i<n; i++)
+//     queue.push (arr[i]);
 
-    while (k--) {
-        int x = queue.top();
-        queue.pop();
-        queue.push (-x);
-    }
-    int sum = 0;
-    for (int i = 0; i < n; i++) {
-        sum += queue.top();
-        queue.pop();
-    }
-    return sum;
-}
+//     while (k--) {
+//         int x = queue.top();
+//         queue.pop();
+//         queue.push (-x);
+//     }
+//     int sum = 0;
+//     for (int i = 0; i < n; i++) {
+//         sum += queue.top();
+//         queue.pop();
+//     }
+//     return sum;
+// }
 
-int main () {
-    int arr[] = {-2, 0, -5, -1, -2};
-    int n = sizeof(arr)/sizeof(int);
-    cout << maximizeSum (arr, n, 4) << endl; 
-}
+// int main () {
+//     int arr[] = {-2, 0, -5, -1, -2};
+//     int n = sizeof(arr)/sizeof(int);
+//     cout << maximizeSum (arr, n, 4) << endl; 
+// }
 
 // 
 
