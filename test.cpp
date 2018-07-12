@@ -1107,7 +1107,42 @@
 //     cout << maximizeSum (arr, n, 4) << endl; 
 // }
 
-// 
+// Maximum Intervals Overlap
+
+#include <iostream>
+#include <algorithm>
+using namespace std; 
+
+int maxGuests (int *arri, int *exit, int n) {
+        
+    sort (arri, arri+n);
+    sort (exit, exit+n);
+    
+    int max = 0, count = 0, i=0, j=0;
+    
+    while (i != n-1) {
+        if (arri[i] <= exit[j]) {
+            count ++;
+            i++;
+        }
+        else {
+            count --;
+            j++;
+        }
+        if (count > max) max = count;
+    }
+    return count;
+}
+
+int main() {
+    int arri[] = {1, 2, 9, 5, 5};
+    int exit[] = {4, 5, 12, 9, 12};
+
+    int n = sizeof(arri)/sizeof(int);
+
+    cout << maxGuests(arri, exit, n) << endl;
+}
+
 
 
 
