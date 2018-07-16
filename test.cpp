@@ -1362,51 +1362,114 @@
 
 // k-th prime factor of a given number
 
+// #include <iostream>
+// using namespace std;
+
+// int* findPrimeNumbers (int k) {
+//     int* arr = new int[k+1];
+//     for (int i=2; i<k+1; i++) arr[i] = -1;
+
+//     for (int i=2; i<k+1; i++) {
+//         if (arr[i] != 0) {
+//             arr[i] = 1;
+//             int l = 2;
+//             while (i*l < k+1) {
+//                 arr[i*l] = 0;
+//                 l++; 
+//             }
+//         }
+//     }
+//     return arr;
+// }
+
+// int KthPrimeFactor (int n, int k) {
+//     int* prime = findPrimeNumbers(n/2);
+//     int y=0, i=2;
+
+//     while (i <= n/2 || k == 1) {  
+//         if (prime[i] != 0) {
+//             if (n%i == 0) {
+//                 n = n/i;
+//                 k--;
+//             }
+//             else i++;
+//         }
+//         else i++;
+
+//         if (k <= 0) {
+//             y = i;
+//             break;
+//         }
+//     }
+//     if (y == 0) return -1;
+//     return y;
+// }
+
+// int main () {
+//     cout << KthPrimeFactor (81, 5) << endl;
+// }
+
+
+// print pascal triangle
+
 #include <iostream>
 using namespace std;
 
-int* findPrimeNumbers (int k) {
-    int* arr = new int[k+1];
-    for (int i=2; i<k+1; i++) arr[i] = -1;
+void swap (int a, int b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
 
-    for (int i=2; i<k+1; i++) {
-        if (arr[i] != 0) {
-            arr[i] = 1;
-            int l = 2;
-            while (i*l < k+1) {
-                arr[i*l] = 0;
-                l++; 
+void pascalTriangle (int n) {
+    int* a = new int [n];
+    int* b = new int [n];
+
+    for (int i=0; i<n; i++) {
+        for (int j=0; j<=i; j++) {
+            if (j == 0 || j == i) {
+                b[j] = 1;
+                cout << "1 ";
+            }
+            else {
+                b[j] = a[j-1] + a[j];
+                cout << b[j] << " ";
             }
         }
+        swap (a, b);
+        cout << '\n';
     }
-    return arr;
 }
 
-int KthPrimeFactor (int n, int k) {
-    int* prime = findPrimeNumbers(n/2);
-    int y=0, i=2;
+// int binomialCoeff(int n, int k) {
+//     int res = 1;
+//     if (k > n - k) k = n - k;
+    
+//     for (int i = 0; i < k; ++i) {
+//         res *= (n - i);
+//         res /= (i + 1);
+//     }     
+//     return res;
+// }
 
-    while (i <= n/2 || k == 1) {  
-        if (prime[i] != 0) {
-            if (n%i == 0) {
-                n = n/i;
-                k--;
-            }
-            else i++;
-        }
-        else i++;
+// void pascalTriangle (int n) {
+//     int* a = new int [n];
+//     int* b = new int [n];
 
-        if (k <= 0) {
-            y = i;
-            break;
-        }
-    }
-    if (y == 0) return -1;
-    return y;
+//     for (int i=0; i<n; i++) {
+//         for (int j=0; j<=i; j++) {
+//             if (j == 0 || j == i) {
+//                 cout << "1 ";
+//             }
+//             else {
+//                 int b = binomialCoeff(i,j);
+//                 cout << b << " ";
+//             }
+//         }
+//         cout << '\n';
+//     }
+// }
+
+int main() {
+    pascalTriangle (14);
 }
-
-int main () {
-    cout << KthPrimeFactor (81, 5) << endl;
-}
-
-
