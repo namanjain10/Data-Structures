@@ -1412,44 +1412,13 @@
 
 // print pascal triangle
 
-#include <iostream>
-using namespace std;
+// #include <iostream>
+// using namespace std;
 
-void swap (int a, int b) {
-    int temp = a;
-    a = b;
-    b = temp;
-}
-
-void pascalTriangle (int n) {
-    int* a = new int [n];
-    int* b = new int [n];
-
-    for (int i=0; i<n; i++) {
-        for (int j=0; j<=i; j++) {
-            if (j == 0 || j == i) {
-                b[j] = 1;
-                cout << "1 ";
-            }
-            else {
-                b[j] = a[j-1] + a[j];
-                cout << b[j] << " ";
-            }
-        }
-        swap (a, b);
-        cout << '\n';
-    }
-}
-
-// int binomialCoeff(int n, int k) {
-//     int res = 1;
-//     if (k > n - k) k = n - k;
-    
-//     for (int i = 0; i < k; ++i) {
-//         res *= (n - i);
-//         res /= (i + 1);
-//     }     
-//     return res;
+// void swap (int a, int b) {
+//     int temp = a;
+//     a = b;
+//     b = temp;
 // }
 
 // void pascalTriangle (int n) {
@@ -1459,17 +1428,65 @@ void pascalTriangle (int n) {
 //     for (int i=0; i<n; i++) {
 //         for (int j=0; j<=i; j++) {
 //             if (j == 0 || j == i) {
+//                 b[j] = 1;
 //                 cout << "1 ";
 //             }
 //             else {
-//                 int b = binomialCoeff(i,j);
-//                 cout << b << " ";
+//                 b[j] = a[j-1] + a[j];
+//                 cout << b[j] << " ";
 //             }
 //         }
+//         swap (a, b);
 //         cout << '\n';
 //     }
 // }
 
+// // int binomialCoeff(int n, int k) {
+// //     int res = 1;
+// //     if (k > n - k) k = n - k;
+    
+// //     for (int i = 0; i < k; ++i) {
+// //         res *= (n - i);
+// //         res /= (i + 1);
+// //     }     
+// //     return res;
+// // }
+
+// // void pascalTriangle (int n) {
+// //     int* a = new int [n];
+// //     int* b = new int [n];
+
+// //     for (int i=0; i<n; i++) {
+// //         for (int j=0; j<=i; j++) {
+// //             if (j == 0 || j == i) {
+// //                 cout << "1 ";
+// //             }
+// //             else {
+// //                 int b = binomialCoeff(i,j);
+// //                 cout << b << " ";
+// //             }
+// //         }
+// //         cout << '\n';
+// //     }
+// // }
+
+// int main() {
+//     pascalTriangle (14);
+// }
+
+// GCD and LCM
+
+#include <iostream>
+using namespace std;
+
+int GCD (int a, int b) {
+    if (a < b) return GCD(b, a);
+    if (a%b == 0) return b;
+    else return GCD (b, a%b);
+}
+
 int main() {
-    pascalTriangle (14);
+    int a = 14, b = 8;
+    int t = GCD(a, b);
+    cout << (a*b) / t << " " << t << endl;
 }
