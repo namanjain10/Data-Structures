@@ -1109,40 +1109,255 @@
 
 // Maximum Intervals Overlap
 
-#include <iostream>
-#include <algorithm>
-using namespace std; 
+// #include <iostream>
+// #include <algorithm>
+// using namespace std; 
 
-int maxGuests (int *arri, int *exit, int n) {
+// int maxGuests (int *arri, int *exit, int n) {
         
-    sort (arri, arri+n);
-    sort (exit, exit+n);
+//     sort (arri, arri+n);
+//     sort (exit, exit+n);
     
-    int max = 0, count = 0, i=0, j=0;
+//     int max = 0, count = 0, i=0, j=0;
     
-    while (i != n-1) {
-        if (arri[i] <= exit[j]) {
-            count ++;
-            i++;
-        }
-        else {
-            count --;
-            j++;
-        }
-        if (count > max) max = count;
-    }
-    return count;
+//     while (i <= n-1) {
+//         if (arri[i] <= exit[j]) {
+//             count ++;
+//         if (count > max) max = count;
+//             i++;
+//         }
+//         else {
+//             count --;
+//             j++;
+//         }
+//         
+//     }
+//     return count;
+// }
+
+// int main() {
+//     int arri[] = {1, 2, 9, 5, 5};
+//     int exit[] = {4, 5, 12, 9, 12};
+
+//     int n = sizeof(arri)/sizeof(int);
+
+//     cout << maxGuests(arri, exit, n) << endl;
+// }
+
+// Nth root of M
+
+// #include <iostream>
+// #include <math.h>
+// using namespace std;
+
+// double NthRootUtil (int n, int m, double start, double end) {
+//     if (end - start <= 0.000001) return start;
+//     double mid = (start + end)/2;
+//     double k = pow(mid, n);
+    
+//     if (k == m) return mid;
+//     else if (k > m) return NthRootUtil(n, m, start, mid);
+//     else return NthRootUtil(n, m, mid, end);
+// }
+
+// double NthRoot (int n, int m) {
+//     return NthRootUtil (n, m, 0, m);
+// }
+
+// int main () {
+//     cout << NthRoot (4, 9) << endl;
+// }
+
+
+// incomplete find extra element
+
+// #include <iostream>
+// using namespace std;
+
+// int findExtraUtil (int *arr1, int start1, int end1, int *arr2, int start2, int end2) {
+
+//     cout << "start1 " << arr1[start1] << " end1 " << arr1[end1] << " start2 " << arr2[start2] << " end2 " << arr2[end2] << endl;
+
+//     if (end1 - start1 <= 0) return start1;
+//     if (end2 - start2 <= 0) {
+//         if (arr1[start1] == arr2[start2]) return end1;
+//         else return start1;
+//     }
+
+//     int mid1 = (start1 + end1)/2;
+
+//     int mid2 = (start2 + end2)/2;
+//     if ((end2 - start2)%2 == 1) mid2 ++;
+
+//     cout << "mid1 " << mid1 << " mid2 " << mid2 << " arr1 " << arr1[mid1] << " arr2 " << arr2[mid2] << endl;
+
+//     if (arr1[mid1] < arr2[mid2]) return findExtraUtil(arr1, start1, mid1, arr2, start2, mid2-1);
+//     else return findExtraUtil(arr1, mid1, end1, arr2, mid2+1, end2);
+// }
+
+// int findExtra (int *arr1, int n1, int *arr2, int n2) {
+//     return findExtraUtil (arr1, 0, n1-1, arr2, 0, n2-1); 
+// }
+
+// int main () {
+
+//     int arr1[1000], arr2[1000], n;
+//     cin >> n;
+
+//     for (int i=0; i<n; i++) cin >> arr1[i];
+//     for (int i=0; i<n-1; i++) cin >> arr2[i];
+
+//     cout << findExtra (arr1, n, arr2, n-1) << endl;
+// }
+
+
+// Min Steps in Infinite Grid
+
+// #include <iostream>
+// using namespace std;
+
+// struct Point {
+//     int x, y;
+// };
+
+// int abs (int a) {
+//     return a < 0 ? -a : a; 
+// }
+// int min (int a, int b) {
+//     return a < b ? a:b;
+// }
+// int minSteps (Point * arr, int n) {
+//     int count=0, x = arr[0].x, y = arr[0].y, c, d;
+
+//     for (int i=1; i<n; i++) {
+//         c = abs(arr[i].x - x) ,d = abs(arr[i].y - y);
+//         count += min(c,d) + abs(c-d);
+//         x = arr[i].x, y = arr[i].y;
+//     }
+//     return count;
+// }
+
+// int main () {
+//     Point arr[1000];
+//     int n;
+//     cin >> n;
+//     for (int i=0; i<n; i++) {
+//         cin >> arr[i].x >> arr[i].y; 
+//     }
+//     cout << minSteps (arr, n) << endl;
+// }
+
+
+// Find a number in minimum steps on infinite number line
+
+// #include <iostream>
+// #include <queue>
+// using namespace std;
+
+// int smallestPath (int n) {
+//     queue <pair<int, int> > arr;
+//     arr.push(pair<int, int>(0, 0));
+//     int x, y;
+
+//     while (1) {
+//         x = arr.front().first;
+//         y = arr.front().second;
+//         if (x == n) break;
+//         arr.pop();
+//         arr.push(pair<int, int>(x + (y+1), y+1));
+//         arr.push(pair<int, int>(x - (y+1), y+1));
+//     }
+//     return y; 
+// }
+
+// int main() {
+//     cout << smallestPath(5) << endl;
+// }
+
+// Kth smallest element from 2-D matrix (using min heap)
+
+// #include <iostream>
+// #include <queue>
+// using namespace std;
+
+// struct Point {
+//     int val, x, y;
+// };
+
+// class myComparator {
+// public:
+//     int operator() (const Point& p1, const Point& p2) {
+//         return p1.val > p2.val;
+//     }
+// };
+
+// int minElement (int ** arr, int n, int k) {
+
+//     priority_queue <Point, vector<Point>, myComparator > hash;
+
+//     for (int i=0; i<n; i++) {
+//         Point a;
+//         a.val = arr[0][i], a.x = 0, a.y = i;
+//         hash.push(a);
+//     }
+//     Point a;
+//     while (k--) {
+//         a = hash.top();
+//         // cout << a.val << " " << a.x << " " << a.y << '\n';
+//         hash.pop();
+//         if (a.x < n-1) {
+//             Point b;
+//             b.val = arr[a.x+1][a.y] ;
+//             b.x = a.x+1;
+//             b.y = a.y;
+//             hash.push(b);
+//         }        
+//     }
+//     return a.val;
+// }
+
+// int main() {
+//     int n, k;
+//     cin >> n;
+//     int ** arr = new int*[n]; 
+
+//     for (int i=0; i<n; i++) {
+//         arr[i] = new int[n];
+//         for (int j=0; j<n; j++) {
+//             cin >> arr[i][j];
+//         }
+//     }
+//     cin >> k;
+//     cout << minElement (arr, n, k) << endl;    
+// }
+
+
+// Find the smallest missing number
+
+#include <iostream>
+using namespace std;
+
+int smallestMissingNumberUtil (int *arr, int start, int end) {
+    if (end - start <= 0) return start;
+
+    if (start != arr[start]) return start;
+    
+    int mid = (start + end)/2;
+    // cout << mid << endl;
+    if (mid == arr[mid]) return smallestMissingNumberUtil(arr, mid+1, end);
+    else return smallestMissingNumberUtil(arr, start, mid);
+}
+
+int smallestMissingNumber (int *arr, int n) {
+    return smallestMissingNumberUtil(arr, 0, n-1);
 }
 
 int main() {
-    int arri[] = {1, 2, 9, 5, 5};
-    int exit[] = {4, 5, 12, 9, 12};
+    int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 10};
+    int n = sizeof (arr) / sizeof(int);
 
-    int n = sizeof(arri)/sizeof(int);
-
-    cout << maxGuests(arri, exit, n) << endl;
+    cout << smallestMissingNumber (arr, n) << endl;
 }
-
 
 
 
