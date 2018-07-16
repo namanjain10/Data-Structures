@@ -1476,17 +1476,60 @@
 
 // GCD and LCM
 
+// #include <iostream>
+// using namespace std;
+
+// int GCD (int a, int b) {
+//     if (a < b) return GCD(b, a);
+//     if (a%b == 0) return b;
+//     else return GCD (b, a%b);
+// }
+
+// int main() {
+//     int a = 14, b = 8;
+//     int t = GCD(a, b);
+//     cout << (a*b) / t << " " << t << endl;
+// }
+
+
+// water overflow problem
+
 #include <iostream>
 using namespace std;
 
-int GCD (int a, int b) {
-    if (a < b) return GCD(b, a);
-    if (a%b == 0) return b;
-    else return GCD (b, a%b);
+void swap (int a, int b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+long double waterOverflow (int x, int y, int n) {
+
+    long double* a = new long double [x];
+    long double* b = new long double [x];
+
+    a[0] = n;
+
+    for (int i=1; i<x; i++) {
+        for (int j=0; j<=i; j++) {
+            b[j] = 0;
+            if (j < i && a[j] > 1) {
+                b[j] += (a[j]-1)/2;
+            }
+            if (j > 0 && a[j-1] > 1) {
+                b[j] += (a[j-1]-1)/2;
+            }
+            if (b[j] < 0) b[j] = 0;
+        }
+        // for (int i=0; i<x; i++) cout << b[i] << " ";
+        // cout << "\n";
+        swap (a, b);
+    }
+    // for (int i=0; i<x; i++) cout << b[i] << " ";
+    if (a[y-1] > 1) return 1;
+    return a[y-1];
 }
 
 int main() {
-    int a = 14, b = 8;
-    int t = GCD(a, b);
-    cout << (a*b) / t << " " << t << endl;
+    cout << waterOverflow (6,3,12) << endl;
 }
