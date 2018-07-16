@@ -1334,30 +1334,79 @@
 
 // Find the smallest missing number
 
+// #include <iostream>
+// using namespace std;
+
+// int smallestMissingNumberUtil (int *arr, int start, int end) {
+//     if (end - start <= 0) return start;
+
+//     if (start != arr[start]) return start;
+    
+//     int mid = (start + end)/2;
+//     // cout << mid << endl;
+//     if (mid == arr[mid]) return smallestMissingNumberUtil(arr, mid+1, end);
+//     else return smallestMissingNumberUtil(arr, start, mid);
+// }
+
+// int smallestMissingNumber (int *arr, int n) {
+//     return smallestMissingNumberUtil(arr, 0, n-1);
+// }
+
+// int main() {
+//     int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 10};
+//     int n = sizeof (arr) / sizeof(int);
+
+//     cout << smallestMissingNumber (arr, n) << endl;
+// }
+
+
+// k-th prime factor of a given number
+
 #include <iostream>
 using namespace std;
 
-int smallestMissingNumberUtil (int *arr, int start, int end) {
-    if (end - start <= 0) return start;
+int* findPrimeNumbers (int k) {
+    int* arr = new int[k+1];
+    for (int i=2; i<k+1; i++) arr[i] = -1;
 
-    if (start != arr[start]) return start;
-    
-    int mid = (start + end)/2;
-    // cout << mid << endl;
-    if (mid == arr[mid]) return smallestMissingNumberUtil(arr, mid+1, end);
-    else return smallestMissingNumberUtil(arr, start, mid);
+    for (int i=2; i<k+1; i++) {
+        if (arr[i] != 0) {
+            arr[i] = 1;
+            int l = 2;
+            while (i*l < k+1) {
+                arr[i*l] = 0;
+                l++; 
+            }
+        }
+    }
+    return arr;
 }
 
-int smallestMissingNumber (int *arr, int n) {
-    return smallestMissingNumberUtil(arr, 0, n-1);
+int KthPrimeFactor (int n, int k) {
+    int* prime = findPrimeNumbers(n/2);
+    int y=0, i=2;
+
+    while (i <= n/2 || k == 1) {  
+        if (prime[i] != 0) {
+            if (n%i == 0) {
+                n = n/i;
+                k--;
+            }
+            else i++;
+        }
+        else i++;
+
+        if (k <= 0) {
+            y = i;
+            break;
+        }
+    }
+    if (y == 0) return -1;
+    return y;
 }
 
-int main() {
-    int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 10};
-    int n = sizeof (arr) / sizeof(int);
-
-    cout << smallestMissingNumber (arr, n) << endl;
+int main () {
+    cout << KthPrimeFactor (81, 5) << endl;
 }
-
 
 
